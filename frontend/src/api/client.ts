@@ -180,6 +180,13 @@ class ApiClient {
     return this.request<Business[]>("/admin/businesses");
   }
 
+  async addAdminBusiness(data: any): Promise<Business> {
+    return this.request<Business>("/admin/businesses", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  }
+
   async verifyBusiness(businessId: string, action: string): Promise<Business> {
     return this.request<Business>(`/admin/businesses/${businessId}/verify`, {
       method: "POST",
@@ -189,6 +196,13 @@ class ApiClient {
 
   async getAdminVolunteers(): Promise<User[]> {
     return this.request<User[]>("/admin/volunteers");
+  }
+
+  async addAdminVolunteer(data: any): Promise<User> {
+    return this.request<User>("/admin/volunteers", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
   }
 
   async verifyVolunteer(userId: string, action: string): Promise<User> {

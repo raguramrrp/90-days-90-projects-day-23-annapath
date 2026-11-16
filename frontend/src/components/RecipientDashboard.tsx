@@ -187,8 +187,8 @@ export const RecipientDashboard: React.FC<RecipientDashboardProps> = ({
                       </div>
                       <p className="text-[10px] text-emerald-200/80 text-center leading-tight">
                         {isVolunteer
-                          ? "Share this OTP with the volunteer at your doorstep to verify handover."
-                          : "Show this OTP to the hotel kitchen staff at collection counter."}
+                          ? "Share this OTP with the volunteer upon handover to verify collection."
+                          : "Show this OTP to the kitchen staff at collection counter."}
                       </p>
                     </div>
                   )}

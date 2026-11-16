@@ -49,7 +49,7 @@ def seed_database():
     # 2. Hotel Owner 1 (Bengaluru)
     owner_blr = User(
         full_name="Pooja Hegde",
-        email="owner@tajwestend.com",
+        email="owner@demokitchen.org",
         phone="+919876500002",
         password_hash=hash_password("ownerpassword123"),
         role="hotel_owner",
@@ -62,7 +62,7 @@ def seed_database():
     # 3. Hotel Owner 2 (Chennai)
     owner_chn = User(
         full_name="Suresh Raman",
-        email="owner@grandchola.com",
+        email="owner@coastalpalms.org",
         phone="+919876500003",
         password_hash=hash_password("ownerpassword123"),
         role="hotel_owner",
@@ -75,7 +75,7 @@ def seed_database():
     # 4. Hotel Staff (Bengaluru)
     staff_blr = User(
         full_name="Kiran Kumar",
-        email="staff@tajwestend.com",
+        email="staff@demokitchen.org",
         phone="+919876500004",
         password_hash=hash_password("staffpassword123"),
         role="hotel_staff",
@@ -145,14 +145,14 @@ def seed_database():
     db.flush()
 
     print("Seeding verified food provider businesses...")
-    # Business 1: Taj West End
+    # Business 1: Heritage Community Dining (Demo Outlet)
     biz_taj = Business(
         owner_user_id=owner_blr.id,
-        business_name="The Taj West End Heritage Kitchen",
+        business_name="Heritage Community Dining (Demo Outlet)",
         business_type="hotel",
-        fssai_license_number="11223344556677",
-        registration_number="BLR-HOTEL-2020-041",
-        address="25 Race Course Road, High Grounds",
+        fssai_license_number="DEMO-FSSAI-0019283",
+        registration_number="BLR-DEMO-2020-041",
+        address="Community Zone 4, Sector 7",
         city="Bengaluru",
         latitude=12.9866,
         longitude=77.5833,
@@ -164,14 +164,14 @@ def seed_database():
     )
     db.add(biz_taj)
 
-    # Business 2: ITC Grand Chola
+    # Business 2: Coastal Palms Banquet Kitchen (Demo Outlet)
     biz_chola = Business(
         owner_user_id=owner_chn.id,
-        business_name="ITC Grand Chola Banquet & Dining",
+        business_name="Coastal Palms Banquet Kitchen (Demo Outlet)",
         business_type="hotel",
-        fssai_license_number="22334455667788",
-        registration_number="CHN-HOTEL-2018-912",
-        address="63 Mount Road, Guindy",
+        fssai_license_number="DEMO-FSSAI-0028374",
+        registration_number="CHN-DEMO-2018-912",
+        address="South Metro Hub 12, Demo Area",
         city="Chennai",
         latitude=13.0105,
         longitude=80.2206,
@@ -183,14 +183,14 @@ def seed_database():
     )
     db.add(biz_chola)
 
-    # Business 3: Artisanal Bakery in Bengaluru
+    # Business 3: Greenleaf Community Bakehouse (Demo Outlet)
     biz_bakery = Business(
         owner_user_id=owner_blr.id,
-        business_name="Lavelle Artisanal Bakehouse",
+        business_name="Greenleaf Community Bakehouse (Demo Outlet)",
         business_type="bakery",
-        fssai_license_number="11229988776655",
-        registration_number="BLR-BAKE-2022-105",
-        address="Lavelle Road, Shanthala Nagar",
+        fssai_license_number="DEMO-FSSAI-0037465",
+        registration_number="BLR-DEMO-2022-105",
+        address="East Community Center, Road 3",
         city="Bengaluru",
         latitude=12.9719,
         longitude=77.5996,
@@ -409,11 +409,11 @@ def seed_database():
     res2_addr = DeliveryAddress(
         reservation_id=res2.id,
         recipient_user_id=rec_ravi.id,
-        address_line="Flat 402, Green Glen Layout, Bellandur",
+        address_line="Community Support Desk, Ward 88, Bellandur",
         city="Bengaluru",
         latitude=12.9279,
         longitude=77.6718,
-        access_instructions="Tower B, take lift to 4th floor. Ring doorbell.",
+        access_instructions="Community desk handover. Contact recipient upon volunteer arrival.",
     )
     db.add(res2_addr)
 

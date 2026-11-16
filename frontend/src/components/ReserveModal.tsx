@@ -178,7 +178,7 @@ export const ReserveModal: React.FC<ReserveModalProps> = ({
                   <span className="text-xs font-bold">Volunteer Delivery</span>
                 </div>
                 <p className="text-[10px] text-stone-500 leading-tight">
-                  Doorstep drop by community volunteer
+                  Volunteer delivery to community point or address
                 </p>
               </button>
             </div>
@@ -189,12 +189,12 @@ export const ReserveModal: React.FC<ReserveModalProps> = ({
             <div className="p-3.5 bg-stone-50 rounded-xl border border-stone-200 space-y-2.5">
               <div>
                 <label className="block text-[11px] font-semibold text-stone-700 mb-1">
-                  Doorstep Delivery Address *
+                  Delivery / Community Handover Address *
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="Apartment / Flat / House, Street, Locality"
+                  placeholder="e.g. Community center desk, shelter office, or local address"
                   value={addressLine}
                   onChange={(e) => setAddressLine(e.target.value)}
                   className="w-full text-xs px-3 py-2 bg-white rounded-lg border border-stone-300 focus:outline-hidden focus:ring-2 focus:ring-emerald-600"
@@ -203,11 +203,11 @@ export const ReserveModal: React.FC<ReserveModalProps> = ({
 
               <div>
                 <label className="block text-[11px] font-semibold text-stone-700 mb-1">
-                  Gate or Access Instructions (Optional)
+                  Handover & Contact Instructions (Optional)
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Ring bell 204 or leave with security"
+                  placeholder="e.g. Meet volunteer at entrance or contact on arrival"
                   value={instructions}
                   onChange={(e) => setInstructions(e.target.value)}
                   className="w-full text-xs px-3 py-2 bg-white rounded-lg border border-stone-300 focus:outline-hidden focus:ring-2 focus:ring-emerald-600"

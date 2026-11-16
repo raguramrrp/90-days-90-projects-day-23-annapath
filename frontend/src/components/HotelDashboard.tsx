@@ -214,7 +214,7 @@ export const HotelDashboard: React.FC<HotelDashboardProps> = ({
               Verified Food Provider
             </span>
             <span className="text-xs text-stone-500 font-mono">
-              FSSAI: {business?.fssai_license_number || "11223344556677"}
+              FSSAI: {business?.fssai_license_number || "DEMO-FSSAI-0019283"}
             </span>
           </div>
           <h1 className="text-2xl font-bold text-stone-900 font-['Plus_Jakarta_Sans',sans-serif]">
@@ -446,19 +446,6 @@ export const HotelDashboard: React.FC<HotelDashboardProps> = ({
       {/* VIEW 2: COUNTER OTP DESK */}
       {currentTab === "verify_desk" && (
         <div className="space-y-6">
-          <div className="bg-gradient-to-r from-emerald-900 to-stone-900 text-white p-6 rounded-2xl shadow-md">
-            <div className="flex items-center gap-2 mb-1">
-              <Key className="w-5 h-5 text-emerald-400" />
-              <h2 className="text-lg font-bold font-['Plus_Jakarta_Sans',sans-serif]">
-                Kitchen Counter OTP Verification Terminal
-              </h2>
-            </div>
-            <p className="text-xs text-stone-300 max-w-2xl leading-relaxed">
-              When a recipient arrives for direct pickup, verify their 6-digit collection OTP code before handing over the food package.
-              Once verified, the reservation is marked collected and inventory is permanently accounted for.
-            </p>
-          </div>
-
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left: Awaiting Reservations Queue */}
             <div className="lg:col-span-2 bg-white rounded-2xl border border-stone-200 shadow-xs p-5 space-y-4">
@@ -858,7 +845,7 @@ export const HotelDashboard: React.FC<HotelDashboardProps> = ({
               <div className="p-3 bg-stone-50 rounded-xl">
                 <span className="text-[11px] font-semibold text-stone-400 uppercase">FSSAI License</span>
                 <p className="text-sm font-bold text-emerald-800 mt-1 font-mono">
-                  {business?.fssai_license_number || "11223344556677"}
+                  {business?.fssai_license_number || "DEMO-FSSAI-0019283"}
                 </p>
                 <p className="text-[11px] text-stone-500">Hygiene & Safety Certified</p>
               </div>
@@ -1163,13 +1150,13 @@ export const HotelDashboard: React.FC<HotelDashboardProps> = ({
                 <input
                   type="email"
                   required
-                  placeholder="e.g. staff@tajwestend.com"
+                  placeholder="e.g. staff@demokitchen.org"
                   value={newStaffEmail}
                   onChange={(e) => setNewStaffEmail(e.target.value)}
                   className="w-full text-xs px-3 py-2 bg-stone-50 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-700"
                 />
                 <p className="text-[10px] text-stone-400 mt-1">
-                  Tip: Use <strong>staff@tajwestend.com</strong> for quick testing.
+                  Tip: Use <strong>staff@demokitchen.org</strong> for quick testing.
                 </p>
               </div>
 

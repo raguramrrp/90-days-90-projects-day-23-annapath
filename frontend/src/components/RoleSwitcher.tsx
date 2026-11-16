@@ -21,9 +21,9 @@ export const DEMO_USERS = [
   },
   {
     role: "hotel_owner" as UserRole,
-    name: "Pooja Hegde (Taj West End)",
+    name: "Pooja Hegde (Heritage Kitchen Demo)",
     roleLabel: "Hotel Owner",
-    email: "owner@tajwestend.com",
+    email: "owner@demokitchen.org",
     password: "ownerpassword123",
     icon: Building2,
     badgeColor: "bg-emerald-100 text-emerald-800 border-emerald-300",
@@ -31,9 +31,9 @@ export const DEMO_USERS = [
   },
   {
     role: "hotel_staff" as UserRole,
-    name: "Kiran Kumar (Kitchen Staff)",
+    name: "Kiran Kumar (Demo Kitchen Staff)",
     roleLabel: "Hotel Staff",
-    email: "staff@tajwestend.com",
+    email: "staff@demokitchen.org",
     password: "staffpassword123",
     icon: Building2,
     badgeColor: "bg-teal-100 text-teal-800 border-teal-300",

@@ -45,3 +45,23 @@ class AuditLogOut(BaseModel):
     created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class AdminBusinessCreate(BaseModel):
+    business_name: str = Field(..., min_length=2)
+    business_type: str = Field("restaurant", description="restaurant, hotel, bakery, catering")
+    fssai_license_number: str = Field("DEMO-FSSAI-000000")
+    address: str = Field(..., min_length=3)
+    city: str = Field("Bengaluru")
+    contact_phone: str = Field("+919876500000")
+    operating_hours: str = Field("08:00 AM - 10:00 PM")
+    supported_distribution_methods: str = Field("both")
+
+
+class AdminVolunteerCreate(BaseModel):
+    full_name: str = Field(..., min_length=2)
+    email: str = Field(..., min_length=5)
+    phone: str = Field("+919876500000")
+    city: str = Field("Bengaluru")
+    preferred_service_area: str = Field("Central Zone")
+    vehicle_type: str = Field("two_wheeler")

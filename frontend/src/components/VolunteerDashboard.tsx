@@ -85,7 +85,7 @@ export const VolunteerDashboard: React.FC<VolunteerDashboardProps> = ({
     try {
       setActing(true);
       await api.confirmVolunteerPickup(taskId);
-      setActionMessage({ type: "success", text: "Packages collected! In transit to recipient doorstep." });
+      setActionMessage({ type: "success", text: "Packages collected! In transit to recipient handover point." });
       onRefresh();
     } catch (err: any) {
       setActionMessage({ type: "error", text: err.message || "Action failed." });
@@ -224,7 +224,7 @@ export const VolunteerDashboard: React.FC<VolunteerDashboardProps> = ({
                 Available Nearby Delivery Runs
               </h3>
               <p className="text-xs text-stone-500">
-                Accept tasks to transport surplus food from hotel kitchens to recipient doorsteps.
+                Accept tasks to transport surplus food from partner kitchens to community distribution points.
               </p>
             </div>
             <span className="text-xs text-stone-500">
@@ -393,12 +393,12 @@ export const VolunteerDashboard: React.FC<VolunteerDashboardProps> = ({
                   </div>
                 </div>
 
-                {/* Step 2: Doorstep Drop & Delivery OTP */}
+                {/* Step 2: Recipient Community Handover & Delivery OTP */}
                 <div className="bg-emerald-900/50 p-4 rounded-xl border border-emerald-800/80 space-y-2.5">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-emerald-300 flex items-center gap-1.5">
                       <span className="w-5 h-5 rounded-full bg-emerald-700 text-white text-[11px] font-bold flex items-center justify-center">2</span>
-                      Recipient Doorstep Drop
+                      Recipient Community Handover
                     </span>
                     <span className="text-[10px] text-emerald-400">
                       Rec: {activeTask.recipient_name}
@@ -429,7 +429,7 @@ export const VolunteerDashboard: React.FC<VolunteerDashboardProps> = ({
                       disabled={acting || deliveryOtpInput.length !== 6}
                       className="px-4 py-2 bg-emerald-400 hover:bg-emerald-300 text-emerald-950 rounded-lg text-xs font-black transition-all flex-1 disabled:opacity-50"
                     >
-                      Verify & Complete Drop
+                      Verify & Complete Handover
                     </button>
                   </form>
                 </div>

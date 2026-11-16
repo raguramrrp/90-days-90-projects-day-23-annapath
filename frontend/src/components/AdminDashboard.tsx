@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   ShieldCheck, AlertTriangle, Building2, Truck, Check, X,
-  FileText, Clock, Users, ArrowUpRight, Search
+  FileText, Clock, Users, ArrowUpRight, Search, Plus, UserPlus
 } from "lucide-react";
 import { Business, User, Complaint, PlatformAnalytics } from "../types";
 import { api } from "../api/client";
@@ -32,6 +32,27 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [resolutionText, setResolutionText] = useState("");
   const [acting, setActing] = useState(false);
 
+  // Add Provider Modal State
+  const [showAddBizModal, setShowAddBizModal] = useState(false);
+  const [newBizName, setNewBizName] = useState("");
+  const [newBizType, setNewBizType] = useState("restaurant");
+  const [newBizFssai, setNewBizFssai] = useState("DEMO-FSSAI-008899");
+  const [newBizCity, setNewBizCity] = useState("Bengaluru");
+  const [newBizAddress, setNewBizAddress] = useState("");
+  const [newBizPhone, setNewBizPhone] = useState("+919876500011");
+  const [newBizHours, setNewBizHours] = useState("08:00 AM - 10:00 PM");
+  const [submittingBiz, setSubmittingBiz] = useState(false);
+
+  // Add Volunteer Modal State
+  const [showAddVolModal, setShowAddVolModal] = useState(false);
+  const [newVolName, setNewVolName] = useState("");
+  const [newVolEmail, setNewVolEmail] = useState("");
+  const [newVolPhone, setNewVolPhone] = useState("+919876500022");
+  const [newVolCity, setNewVolCity] = useState("Bengaluru");
+  const [newVolArea, setNewVolArea] = useState("Central Community Zone");
+  const [newVolVehicle, setNewVolVehicle] = useState("two_wheeler");
+  const [submittingVol, setSubmittingVol] = useState(false);
+
   useEffect(() => {
     if (activeTab && activeTab.startsWith("admin_")) {
       const mapped = activeTab.replace("admin_", "") as any;
@@ -45,6 +66,56 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     setSubTab(tab);
     if (onTabChange) {
       onTabChange(`admin_${tab}`);
+    }
+  };
+
+  const handleAddBusiness = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newBizName.trim() || !newBizAddress.trim()) return;
+    try {
+      setSubmittingBiz(true);
+      await api.addAdminBusiness({
+        business_name: newBizName.trim(),
+        business_type: newBizType,
+        fssai_license_number: newBizFssai.trim(),
+        address: newBizAddress.trim(),
+        city: newBizCity,
+        contact_phone: newBizPhone.trim(),
+        operating_hours: newBizHours.trim(),
+        supported_distribution_methods: "both",
+      });
+      setShowAddBizModal(false);
+      setNewBizName("");
+      setNewBizAddress("");
+      onRefresh();
+    } catch (err: any) {
+      alert("Failed to add provider: " + (err.message || "Unknown error"));
+    } finally {
+      setSubmittingBiz(false);
+    }
+  };
+
+  const handleAddVolunteer = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newVolName.trim() || !newVolEmail.trim()) return;
+    try {
+      setSubmittingVol(true);
+      await api.addAdminVolunteer({
+        full_name: newVolName.trim(),
+        email: newVolEmail.trim().toLowerCase(),
+        phone: newVolPhone.trim(),
+        city: newVolCity,
+        preferred_service_area: newVolArea.trim(),
+        vehicle_type: newVolVehicle,
+      });
+      setShowAddVolModal(false);
+      setNewVolName("");
+      setNewVolEmail("");
+      onRefresh();
+    } catch (err: any) {
+      alert("Failed to add volunteer: " + (err.message || "Unknown error"));
+    } finally {
+      setSubmittingVol(false);
     }
   };
 
@@ -106,9 +177,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <h1 className="text-2xl font-bold text-stone-900 font-['Plus_Jakarta_Sans',sans-serif]">
             Platform Governance & Moderation
           </h1>
-          <p className="text-xs text-stone-500 mt-0.5">
-            Monitor verified food outlets, volunteer authorizations, safety complaints, and immutable audit logs.
-          </p>
         </div>
 
         {/* Sub-tab navigation */}
@@ -232,12 +300,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {subTab === "businesses" && (
         <div className="bg-white rounded-2xl border border-stone-200 shadow-xs overflow-hidden">
           <div className="p-4 border-b border-stone-100 flex items-center justify-between">
-            <h3 className="font-bold text-sm text-stone-900">
-              Registered Food Provider Businesses
-            </h3>
-            <span className="text-xs text-stone-500">
-              Total: {businesses.length}
-            </span>
+            <div>
+              <h3 className="font-bold text-sm text-stone-900">
+                Registered Food Provider Businesses
+              </h3>
+              <span className="text-xs text-stone-500">
+                Total: {businesses.length} registered outlets
+              </span>
+            </div>
+            <button
+              onClick={() => setShowAddBizModal(true)}
+              className="px-3.5 py-2 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add Food Provider</span>
+            </button>
           </div>
 
           <div className="overflow-x-auto">
@@ -259,14 +336,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       <p className="font-bold text-stone-900">{b.business_name}</p>
                       <p className="text-[10px] text-stone-400 capitalize">{b.business_type}</p>
                     </td>
-                    <td className="py-3 px-4">
-                      <p className="text-stone-700">{b.city}</p>
-                      <p className="text-[10px] text-stone-400 truncate max-w-xs">{b.address}</p>
+                    <td className="py-3 px-4 text-stone-600">
+                      {b.city} • <span className="text-[11px] text-stone-400">{b.address}</span>
                     </td>
-                    <td className="py-3 px-4 font-mono text-stone-600">
-                      {b.fssai_license_number || "Pending"}
+                    <td className="py-3 px-4 font-mono text-[11px] text-stone-700">
+                      {b.fssai_license_number || "DEMO-FSSAI-000000"}
                     </td>
-                    <td className="py-3 px-4 capitalize text-stone-700">
+                    <td className="py-3 px-4 capitalize text-stone-600">
                       {b.supported_distribution_methods.replace("_", " ")}
                     </td>
                     <td className="py-3 px-4">
@@ -287,16 +363,16 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         <button
                           onClick={() => handleVerifyBusiness(b.id, "approve")}
                           disabled={acting}
-                          className="px-2 py-1 bg-emerald-800 hover:bg-emerald-900 text-white rounded text-[11px] font-bold"
+                          className="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-800 text-white rounded text-[11px] font-semibold"
                         >
                           Approve
                         </button>
                       )}
-                      {b.verification_status !== "suspended" && (
+                      {b.verification_status === "verified" && (
                         <button
                           onClick={() => handleVerifyBusiness(b.id, "suspend")}
                           disabled={acting}
-                          className="px-2 py-1 bg-stone-100 hover:bg-red-50 text-red-700 rounded text-[11px] font-semibold border border-stone-200"
+                          className="px-2.5 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded text-[11px] font-semibold"
                         >
                           Suspend
                         </button>
@@ -314,12 +390,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {subTab === "volunteers" && (
         <div className="bg-white rounded-2xl border border-stone-200 shadow-xs overflow-hidden">
           <div className="p-4 border-b border-stone-100 flex items-center justify-between">
-            <h3 className="font-bold text-sm text-stone-900">
-              Community Volunteer Profiles
-            </h3>
-            <span className="text-xs text-stone-500">
-              Total: {volunteers.length}
-            </span>
+            <div>
+              <h3 className="font-bold text-sm text-stone-900">
+                Community Volunteer Profiles
+              </h3>
+              <span className="text-xs text-stone-500">
+                Total: {volunteers.length} registered volunteers
+              </span>
+            </div>
+            <button
+              onClick={() => setShowAddVolModal(true)}
+              className="px-3.5 py-2 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5"
+            >
+              <UserPlus className="w-4 h-4" />
+              <span>Add Volunteer</span>
+            </button>
           </div>
 
           <div className="overflow-x-auto">
@@ -338,30 +423,36 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 {volunteers.map((v) => (
                   <tr key={v.id} className="hover:bg-stone-50/50">
                     <td className="py-3 px-4 font-bold text-stone-900">{v.full_name}</td>
-                    <td className="py-3 px-4 text-stone-600">{v.email}</td>
-                    <td className="py-3 px-4 font-mono text-stone-600">{v.phone}</td>
-                    <td className="py-3 px-4 text-stone-700">{v.city || "Bengaluru"}</td>
+                    <td className="py-3 px-4 text-stone-500">{v.email}</td>
+                    <td className="py-3 px-4 text-stone-600">{v.phone}</td>
+                    <td className="py-3 px-4 text-stone-600">{v.city || "Bengaluru"}</td>
                     <td className="py-3 px-4">
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-100 text-green-800 capitalize">
+                      <span
+                        className={`px-2 py-0.5 rounded-full text-[10px] font-bold capitalize ${
+                          v.account_status === "verified"
+                            ? "bg-green-100 text-green-800"
+                            : "bg-amber-100 text-amber-800"
+                        }`}
+                      >
                         {v.account_status}
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-right">
-                      {v.account_status === "verified" ? (
-                        <button
-                          onClick={() => handleVerifyVolunteer(v.id, "suspend")}
-                          disabled={acting}
-                          className="px-2 py-1 text-red-700 hover:bg-red-50 text-[11px] font-medium border border-red-200 rounded"
-                        >
-                          Suspend
-                        </button>
-                      ) : (
+                    <td className="py-3 px-4 text-right space-x-1.5">
+                      {v.account_status !== "verified" ? (
                         <button
                           onClick={() => handleVerifyVolunteer(v.id, "approve")}
                           disabled={acting}
-                          className="px-2 py-1 bg-emerald-800 text-white text-[11px] font-bold rounded"
+                          className="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-800 text-white rounded text-[11px] font-semibold"
                         >
-                          Approve
+                          Verify ID
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleVerifyVolunteer(v.id, "suspend")}
+                          disabled={acting}
+                          className="px-2.5 py-1 text-red-600 hover:bg-red-50 rounded text-[11px] font-semibold"
+                        >
+                          Suspend
                         </button>
                       )}
                     </td>
@@ -375,57 +466,67 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
       {/* COMPLAINTS SUB-TAB */}
       {subTab === "complaints" && (
-        <div className="bg-white rounded-2xl border border-stone-200 shadow-xs p-6 space-y-4">
+        <div className="bg-white rounded-2xl border border-stone-200 shadow-xs p-5 space-y-4">
           <div className="flex items-center justify-between border-b border-stone-100 pb-3">
             <div>
-              <h3 className="font-bold text-base text-stone-900">
-                Food Safety, Hygiene & Service Complaints
+              <h3 className="font-bold text-sm text-stone-900">
+                Reported Safety & Service Issues
               </h3>
               <p className="text-xs text-stone-500">
-                Investigate packaging, temperature holding, and collection anomalies.
+                Investigate packaging, temperature, hygiene, and handover complaints.
               </p>
             </div>
-            <span className="text-xs font-semibold bg-amber-50 text-amber-800 px-2.5 py-1 rounded-full border border-amber-200">
+            <span className="text-xs font-semibold px-2 py-0.5 bg-amber-50 text-amber-800 rounded-full">
               {complaints.filter((c) => c.status === "open").length} open cases
             </span>
           </div>
 
           <div className="space-y-3">
+            {complaints.length === 0 && (
+              <div className="py-12 text-center text-xs text-stone-400">
+                No active complaints filed on the platform.
+              </div>
+            )}
             {complaints.map((c) => (
               <div
                 key={c.id}
-                className="p-4 rounded-xl border border-stone-200 bg-stone-50/50 space-y-2.5"
+                className="p-4 rounded-xl border border-stone-200 bg-stone-50/50 space-y-2 text-xs"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-stone-800 capitalize flex items-center gap-1.5">
-                    <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
-                    Category: {c.complaint_type.replace("_", " ")}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-800 uppercase">
+                      {c.complaint_type.replace("_", " ")}
+                    </span>
+                    <span className="text-stone-400 font-mono text-[11px]">
+                      Case #{c.id.slice(0, 8)}
+                    </span>
+                  </div>
                   <span
-                    className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                      c.status === "open"
-                        ? "bg-red-100 text-red-800"
-                        : "bg-emerald-100 text-emerald-800"
+                    className={`px-2 py-0.5 rounded-full text-[10px] font-bold capitalize ${
+                      c.status === "resolved"
+                        ? "bg-emerald-100 text-emerald-800"
+                        : "bg-amber-100 text-amber-800"
                     }`}
                   >
                     {c.status}
                   </span>
                 </div>
 
-                <p className="text-xs text-stone-700 bg-white p-3 rounded-lg border border-stone-200">
-                  "{c.description}"
+                <p className="text-stone-800 font-medium">{c.description}</p>
+                <p className="text-[11px] text-stone-400">
+                  Reported by {c.reporter_name || "Recipient"} • {new Date(c.created_at).toLocaleDateString()}
                 </p>
 
                 {c.resolution_notes && (
-                  <p className="text-[11px] text-emerald-800 bg-emerald-50/70 p-2.5 rounded-lg border border-emerald-200">
-                    <strong>Resolution Notes:</strong> {c.resolution_notes}
-                  </p>
+                  <div className="p-2.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 text-[11px]">
+                    <strong>Resolution Note:</strong> {c.resolution_notes}
+                  </div>
                 )}
 
-                {c.status === "open" && (
-                  <div>
+                {c.status !== "resolved" && (
+                  <div className="pt-2">
                     {resolvingId === c.id ? (
-                      <div className="space-y-2 pt-2">
+                      <div className="space-y-2 bg-white p-3 rounded-xl border border-stone-200">
                         <textarea
                           rows={2}
                           placeholder="Enter investigation outcome and corrective actions..."
@@ -487,8 +588,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   <th className="py-2.5 px-4">Timestamp</th>
                   <th className="py-2.5 px-4">Action</th>
                   <th className="py-2.5 px-4">Entity Type</th>
-                  <th className="py-2.5 px-4">Entity ID</th>
-                  <th className="py-2.5 px-4">Metadata</th>
+                  <th className="py-2.5 px-4">Reference ID</th>
+                  <th className="py-2.5 px-4">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-stone-100 text-[11px]">
@@ -500,19 +601,279 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     <td className="py-2.5 px-4 font-bold text-emerald-800">
                       {log.action}
                     </td>
-                    <td className="py-2.5 px-4 text-stone-600">
-                      {log.entity_type}
+                    <td className="py-2.5 px-4 text-stone-600 capitalize">
+                      {log.entity_type.replace("_", " ")}
                     </td>
-                    <td className="py-2.5 px-4 text-stone-400">
-                      {log.entity_id?.slice(0, 12)}
+                    <td className="py-2.5 px-4 text-stone-500 font-mono">
+                      #{log.entity_id?.slice(0, 8)}
                     </td>
-                    <td className="py-2.5 px-4 text-stone-500 truncate max-w-xs">
-                      {log.metadata_json || "-"}
+                    <td className="py-2.5 px-4">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-stone-100 text-stone-700">
+                        Logged
+                      </span>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 1: ADD FOOD PROVIDER */}
+      {showAddBizModal && (
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-stone-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-stone-200 relative animate-in fade-in zoom-in-95 duration-150">
+            <button
+              onClick={() => setShowAddBizModal(false)}
+              className="absolute top-4 right-4 text-stone-400 hover:text-stone-700 p-1.5 rounded-lg hover:bg-stone-100"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-2 mb-1">
+              <Building2 className="w-5 h-5 text-emerald-800" />
+              <h2 className="text-xl font-bold text-stone-900 font-['Plus_Jakarta_Sans',sans-serif]">
+                Register New Food Provider
+              </h2>
+            </div>
+            <p className="text-xs text-stone-500 mb-4">
+              Add a partner hotel kitchen, restaurant, catering business, or bakery to the redistribution network.
+            </p>
+
+            <form onSubmit={handleAddBusiness} className="space-y-3.5">
+              <div>
+                <label className="block text-[11px] font-semibold text-stone-700 mb-1">
+                  Business / Kitchen Name *
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Sunrise Community Kitchen (Demo)"
+                  value={newBizName}
+                  onChange={(e) => setNewBizName(e.target.value)}
+                  className="w-full text-xs px-3 py-2 bg-stone-50 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-700"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[11px] font-semibold text-stone-700 mb-1">
+                    Establishment Type
+                  </label>
+                  <select
+                    value={newBizType}
+                    onChange={(e) => setNewBizType(e.target.value)}
+                    className="w-full text-xs px-3 py-2 bg-stone-50 rounded-lg border border-stone-300"
+                  >
+                    <option value="hotel">Hotel / Dining</option>
+                    <option value="restaurant">Restaurant</option>
+                    <option value="bakery">Bakery</option>
+                    <option value="catering">Catering Service</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-semibold text-stone-700 mb-1">
+                    Demo FSSAI License Number
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={newBizFssai}
+                    onChange={(e) => setNewBizFssai(e.target.value)}
+                    className="w-full text-xs px-3 py-2 bg-stone-50 rounded-lg border border-stone-300 font-mono"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[11px] font-semibold text-stone-700 mb-1">
+                    Metro City
+                  </label>
+                  <select
+                    value={newBizCity}
+                    onChange={(e) => setNewBizCity(e.target.value)}
+                    className="w-full text-xs px-3 py-2 bg-stone-50 rounded-lg border border-stone-300"
+                  >
+                    <option value="Bengaluru">Bengaluru</option>
+                    <option value="Chennai">Chennai</option>
+                    <option value="Mumbai">Mumbai</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-semibold text-stone-700 mb-1">
+                    Contact Phone
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={newBizPhone}
+                    onChange={(e) => setNewBizPhone(e.target.value)}
+                    className="w-full text-xs px-3 py-2 bg-stone-50 rounded-lg border border-stone-300"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-semibold text-stone-700 mb-1">
+                  Physical Kitchen Address *
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Sector 5 Community Center, Main Road"
+                  value={newBizAddress}
+                  onChange={(e) => setNewBizAddress(e.target.value)}
+                  className="w-full text-xs px-3 py-2 bg-stone-50 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-700"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-semibold text-stone-700 mb-1">
+                  Operating Hours
+                </label>
+                <input
+                  type="text"
+                  value={newBizHours}
+                  onChange={(e) => setNewBizHours(e.target.value)}
+                  className="w-full text-xs px-3 py-2 bg-stone-50 rounded-lg border border-stone-300"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={submittingBiz}
+                className="w-full py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-xs font-bold transition-all shadow-xs"
+              >
+                {submittingBiz ? "Registering Provider..." : "Register & Verify Food Provider"}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 2: ADD VOLUNTEER */}
+      {showAddVolModal && (
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-stone-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200 relative animate-in fade-in zoom-in-95 duration-150">
+            <button
+              onClick={() => setShowAddVolModal(false)}
+              className="absolute top-4 right-4 text-stone-400 hover:text-stone-700 p-1.5 rounded-lg hover:bg-stone-100"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-2 mb-1">
+              <UserPlus className="w-5 h-5 text-emerald-800" />
+              <h2 className="text-xl font-bold text-stone-900 font-['Plus_Jakarta_Sans',sans-serif]">
+                Register New Volunteer
+              </h2>
+            </div>
+            <p className="text-xs text-stone-500 mb-4">
+              Onboard a community volunteer to assist with surplus meal handovers.
+            </p>
+
+            <form onSubmit={handleAddVolunteer} className="space-y-3.5">
+              <div>
+                <label className="block text-[11px] font-semibold text-stone-700 mb-1">
+                  Volunteer Full Name *
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Meera Krishnan"
+                  value={newVolName}
+                  onChange={(e) => setNewVolName(e.target.value)}
+                  className="w-full text-xs px-3 py-2 bg-stone-50 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-700"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-semibold text-stone-700 mb-1">
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  required
+                  placeholder="e.g. meera.volunteer@annapath.org"
+                  value={newVolEmail}
+                  onChange={(e) => setNewVolEmail(e.target.value)}
+                  className="w-full text-xs px-3 py-2 bg-stone-50 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-700"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[11px] font-semibold text-stone-700 mb-1">
+                    Phone Number
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={newVolPhone}
+                    onChange={(e) => setNewVolPhone(e.target.value)}
+                    className="w-full text-xs px-3 py-2 bg-stone-50 rounded-lg border border-stone-300"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-semibold text-stone-700 mb-1">
+                    Metro City
+                  </label>
+                  <select
+                    value={newVolCity}
+                    onChange={(e) => setNewVolCity(e.target.value)}
+                    className="w-full text-xs px-3 py-2 bg-stone-50 rounded-lg border border-stone-300"
+                  >
+                    <option value="Bengaluru">Bengaluru</option>
+                    <option value="Chennai">Chennai</option>
+                    <option value="Mumbai">Mumbai</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[11px] font-semibold text-stone-700 mb-1">
+                    Service Area / Zone
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={newVolArea}
+                    onChange={(e) => setNewVolArea(e.target.value)}
+                    className="w-full text-xs px-3 py-2 bg-stone-50 rounded-lg border border-stone-300"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-semibold text-stone-700 mb-1">
+                    Transport Type
+                  </label>
+                  <select
+                    value={newVolVehicle}
+                    onChange={(e) => setNewVolVehicle(e.target.value)}
+                    className="w-full text-xs px-3 py-2 bg-stone-50 rounded-lg border border-stone-300"
+                  >
+                    <option value="two_wheeler">Two-Wheeler / Scooter</option>
+                    <option value="bicycle">Bicycle</option>
+                    <option value="four_wheeler">Four-Wheeler / Car</option>
+                    <option value="walking">Walking / Local</option>
+                  </select>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={submittingVol}
+                className="w-full py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white rounded-xl text-xs font-bold transition-all shadow-xs"
+              >
+                {submittingVol ? "Onboarding Volunteer..." : "Register & Authorize Volunteer"}
+              </button>
+            </form>
           </div>
         </div>
       )}

@@ -5,9 +5,11 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from backend.app.database import get_db
-from backend.app.models.entities import Business, User, Complaint, AuditLog
+from backend.app.models.entities import Business, User, UserProfile, VolunteerProfile, Complaint, AuditLog
+from backend.app.security import hash_password
 from backend.app.schemas.admin import (
-    VerificationAction, ComplaintCreate, ComplaintUpdate, ComplaintOut, AuditLogOut
+    VerificationAction, ComplaintCreate, ComplaintUpdate, ComplaintOut, AuditLogOut,
+    AdminBusinessCreate, AdminVolunteerCreate
 )
 from backend.app.schemas.business import BusinessOut
 from backend.app.schemas.auth import UserOut
@@ -28,6 +30,33 @@ def list_all_businesses(
 ):
     """Admin view of all registered food providers and verification statuses."""
     return db.query(Business).order_by(Business.created_at.desc()).all()
+
+
+@router.post("/businesses", response_model=BusinessOut, status_code=status.HTTP_201_CREATED)
+def admin_create_business(
+    data: AdminBusinessCreate,
+    current_user: User = Depends(require_roles("admin")),
+    db: Session = Depends(get_db),
+):
+    """Admin registers a verified food provider."""
+    biz = Business(
+        owner_user_id=current_user.id,
+        business_name=data.business_name.strip(),
+        business_type=data.business_type,
+        fssai_license_number=data.fssai_license_number.strip(),
+        address=data.address.strip(),
+        city=data.city.strip(),
+        latitude=12.9716,
+        longitude=77.5946,
+        contact_phone=data.contact_phone.strip(),
+        operating_hours=data.operating_hours.strip(),
+        supported_distribution_methods=data.supported_distribution_methods,
+        verification_status="verified",
+    )
+    db.add(biz)
+    db.commit()
+    db.refresh(biz)
+    return biz
 
 
 @router.post("/businesses/{business_id}/verify", response_model=BusinessOut)
@@ -63,6 +92,52 @@ def list_volunteers(
         )
         for u in users
     ]
+
+
+@router.post("/volunteers", response_model=UserOut, status_code=status.HTTP_201_CREATED)
+def admin_create_volunteer(
+    data: AdminVolunteerCreate,
+    current_user: User = Depends(require_roles("admin")),
+    db: Session = Depends(get_db),
+):
+    """Admin registers and verifies a community volunteer."""
+    existing = db.query(User).filter(User.email == data.email.lower().strip()).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="User with this email already exists.")
+
+    vol = User(
+        full_name=data.full_name.strip(),
+        email=data.email.lower().strip(),
+        phone=data.phone.strip(),
+        password_hash=hash_password("volunteer123"),
+        role="volunteer",
+        account_status="verified",
+        phone_verified=True,
+    )
+    vol.profile = UserProfile(preferred_language="en", city=data.city.strip())
+    vol.volunteer_profile = VolunteerProfile(
+        verification_status="verified",
+        service_radius_km=10.0,
+        availability_status="available",
+        preferred_service_area=data.preferred_service_area.strip(),
+        vehicle_type=data.vehicle_type,
+        total_deliveries_completed=0,
+    )
+    db.add(vol)
+    db.commit()
+    db.refresh(vol)
+    return UserOut(
+        id=vol.id,
+        full_name=vol.full_name,
+        email=vol.email,
+        phone=vol.phone,
+        role=vol.role,
+        account_status=vol.account_status,
+        phone_verified=vol.phone_verified,
+        city=vol.profile.city,
+        preferred_language="en",
+        created_at=vol.created_at,
+    )
 
 
 @router.post("/volunteers/{user_id}/verify", response_model=UserOut)
