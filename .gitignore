@@ -46,6 +46,9 @@ pnpm-debug.log*
 .coverage
 htmlcov/
 
+# Local Only (Never push to git)
+screenshots/
+
 .idea/
 *.sublime-project
 *.sublime-workspace
