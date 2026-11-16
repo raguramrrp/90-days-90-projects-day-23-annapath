@@ -48,17 +48,27 @@ export function App() {
   useEffect(() => {
     const initAuth = async () => {
       try {
-        const stored = api.getToken();
-        if (stored) {
-          const me = await api.getMe();
-          setCurrentUser(me);
-        } else {
-          // Default to recipient Ravi
-          const res = await api.login(REGISTERED_ACCOUNTS[0].email, REGISTERED_ACCOUNTS[0].password);
-          setCurrentUser(res.user);
+        const params = new URLSearchParams(window.location.search);
+        const roleParam = params.get("role");
+        const tabParam = params.get("tab");
+        const modalParam = params.get("modal");
+
+        let accountToUse = REGISTERED_ACCOUNTS[0];
+        if (roleParam) {
+          const found = REGISTERED_ACCOUNTS.find((a) => a.role === roleParam);
+          if (found) accountToUse = found;
+        }
+
+        const res = await api.login(accountToUse.email, accountToUse.password);
+        setCurrentUser(res.user);
+
+        if (tabParam) {
+          setActiveTab(tabParam);
+        }
+        if (modalParam === "safety") {
+          setShowSafetyModal(true);
         }
       } catch (e) {
-        // Fallback to login
         const res = await api.login(REGISTERED_ACCOUNTS[0].email, REGISTERED_ACCOUNTS[0].password);
         setCurrentUser(res.user);
       } finally {
@@ -122,7 +132,11 @@ export function App() {
     if (currentUser) {
       refreshData();
       // Set appropriate initial tab
-      if (currentUser.role === "hotel_owner" || currentUser.role === "hotel_staff") {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get("tab");
+      if (tabParam) {
+        setActiveTab(tabParam);
+      } else if (currentUser.role === "hotel_owner" || currentUser.role === "hotel_staff") {
         setActiveTab("listings");
       } else if (currentUser.role === "volunteer") {
         setActiveTab("tasks");

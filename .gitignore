@@ -46,8 +46,11 @@ pnpm-debug.log*
 .coverage
 htmlcov/
 
-# IDE & OS
-.vscode/
+# Local Screenshots & Artifacts
+screenshots/
+*.png
+*.jpg
+*.jpeg
 .idea/
 *.sublime-project
 *.sublime-workspace
