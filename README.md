@@ -253,12 +253,7 @@ tests/test_volunteers.py::test_volunteer_decline_task_without_penalty PASSED [10
 
 ---
 
-## 13. Relevant Skills & Portfolio Keywords
 
-`FastAPI` `Python 3.12` `React 19` `TypeScript` `Tailwind CSS 4` `Vite` `SQLAlchemy 2.0` `SQLite WAL` `OpenStreetMap / Leaflet` `Recharts` `HMAC-SHA256` `JWT Authentication` `RBAC` `RESTful API Architecture` `Haversine Distance` `FSSAI Compliance` `Food Waste Logistics` `Automated Testing (Pytest)` `CI/CD Readiness`
-
----
-
-## 14. License
+## 13. License
 
 Distributed under the **MIT License**. See `LICENSE` for details.
