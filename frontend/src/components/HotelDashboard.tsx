@@ -182,7 +182,15 @@ export const HotelDashboard: React.FC<HotelDashboardProps> = ({
         image_url:
           newCategory === "bakery"
             ? "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80"
-            : "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80",
+            : newCategory === "breakfast"
+            ? "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80"
+            : newCategory === "curries_gravy"
+            ? "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=600&q=80"
+            : newCategory === "snacks"
+            ? "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80"
+            : newCategory === "desserts"
+            ? "https://images.unsplash.com/photo-1589301773859-f8319f3949f2?auto=format&fit=crop&w=600&q=80"
+            : "https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=600&q=80",
       });
 
       setShowCreateModal(false);
@@ -214,7 +222,7 @@ export const HotelDashboard: React.FC<HotelDashboardProps> = ({
               Verified Food Provider
             </span>
             <span className="text-xs text-stone-500 font-mono">
-              FSSAI: {business?.fssai_license_number || "DEMO-FSSAI-0019283"}
+              FSSAI: {business?.fssai_license_number || "11223334001928"}
             </span>
           </div>
           <h1 className="text-2xl font-bold text-stone-900 font-['Plus_Jakarta_Sans',sans-serif]">
@@ -845,7 +853,7 @@ export const HotelDashboard: React.FC<HotelDashboardProps> = ({
               <div className="p-3 bg-stone-50 rounded-xl">
                 <span className="text-[11px] font-semibold text-stone-400 uppercase">FSSAI License</span>
                 <p className="text-sm font-bold text-emerald-800 mt-1 font-mono">
-                  {business?.fssai_license_number || "DEMO-FSSAI-0019283"}
+                  {business?.fssai_license_number || "11223334001928"}
                 </p>
                 <p className="text-[11px] text-stone-500">Hygiene & Safety Certified</p>
               </div>
@@ -1027,6 +1035,7 @@ export const HotelDashboard: React.FC<HotelDashboardProps> = ({
                     className="w-full text-xs px-3 py-2 bg-stone-50 rounded-lg border border-stone-300"
                   >
                     <option value="meals">🍱 Full Meals</option>
+                    <option value="breakfast">🥞 Breakfast & Tiffins</option>
                     <option value="bakery">🥖 Bakery & Breads</option>
                     <option value="curries_gravy">🍲 Curries & Gravy</option>
                     <option value="snacks">☕ Snacks & Tea</option>
@@ -1150,13 +1159,13 @@ export const HotelDashboard: React.FC<HotelDashboardProps> = ({
                 <input
                   type="email"
                   required
-                  placeholder="e.g. staff@demokitchen.org"
+                  placeholder="e.g. kiran.kumar@annapath.org"
                   value={newStaffEmail}
                   onChange={(e) => setNewStaffEmail(e.target.value)}
                   className="w-full text-xs px-3 py-2 bg-stone-50 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-700"
                 />
                 <p className="text-[10px] text-stone-400 mt-1">
-                  Tip: Use <strong>staff@demokitchen.org</strong> for quick testing.
+                  Tip: Provide the registered email of your operational team member.
                 </p>
               </div>
 

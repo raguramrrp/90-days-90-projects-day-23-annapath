@@ -8,7 +8,7 @@ interface RoleSwitcherProps {
   onSelectRole: (role: UserRole, email: string, password: string) => void;
 }
 
-export const DEMO_USERS = [
+export const REGISTERED_ACCOUNTS = [
   {
     role: "recipient" as UserRole,
     name: "Ravi Shankar",
@@ -21,9 +21,9 @@ export const DEMO_USERS = [
   },
   {
     role: "hotel_owner" as UserRole,
-    name: "Pooja Hegde (Heritage Kitchen Demo)",
+    name: "Pooja Hegde",
     roleLabel: "Hotel Owner",
-    email: "owner@demokitchen.org",
+    email: "pooja.hegde@annapath.org",
     password: "ownerpassword123",
     icon: Building2,
     badgeColor: "bg-emerald-100 text-emerald-800 border-emerald-300",
@@ -31,9 +31,9 @@ export const DEMO_USERS = [
   },
   {
     role: "hotel_staff" as UserRole,
-    name: "Kiran Kumar (Demo Kitchen Staff)",
+    name: "Kiran Kumar",
     roleLabel: "Hotel Staff",
-    email: "staff@demokitchen.org",
+    email: "kiran.kumar@annapath.org",
     password: "staffpassword123",
     icon: Building2,
     badgeColor: "bg-teal-100 text-teal-800 border-teal-300",
@@ -61,6 +61,9 @@ export const DEMO_USERS = [
   },
 ];
 
+// Backward-compatible alias
+export const DEMO_USERS = REGISTERED_ACCOUNTS;
+
 export const RoleSwitcher: React.FC<RoleSwitcherProps> = ({
   currentEmail,
   onSelectRole,
@@ -70,12 +73,12 @@ export const RoleSwitcher: React.FC<RoleSwitcherProps> = ({
       <div className="flex items-center gap-2 font-medium">
         <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
         <span className="text-stone-400 font-semibold tracking-wide uppercase text-[10px]">
-          Demo Persona Switcher:
+          Switch Account:
         </span>
       </div>
 
       <div className="flex flex-wrap items-center gap-1.5">
-        {DEMO_USERS.map((u) => {
+        {REGISTERED_ACCOUNTS.map((u) => {
           const isSelected = currentEmail === u.email;
           const Icon = u.icon;
           return (

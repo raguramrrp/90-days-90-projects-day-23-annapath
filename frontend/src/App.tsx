@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Navbar } from "./components/Navbar";
-import { RoleSwitcher, DEMO_USERS } from "./components/RoleSwitcher";
+import { REGISTERED_ACCOUNTS } from "./components/RoleSwitcher";
 import { FoodDiscovery } from "./components/FoodDiscovery";
 import { ReserveModal } from "./components/ReserveModal";
 import { RecipientDashboard } from "./components/RecipientDashboard";
@@ -44,7 +44,7 @@ export function App() {
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState<Record<string, any>>({});
 
-  // Auto-login default demo user (Recipient) on initial mount
+  // Authenticate initial recipient profile on mount
   useEffect(() => {
     const initAuth = async () => {
       try {
@@ -54,12 +54,12 @@ export function App() {
           setCurrentUser(me);
         } else {
           // Default to recipient Ravi
-          const res = await api.login(DEMO_USERS[0].email, DEMO_USERS[0].password);
+          const res = await api.login(REGISTERED_ACCOUNTS[0].email, REGISTERED_ACCOUNTS[0].password);
           setCurrentUser(res.user);
         }
       } catch (e) {
         // Fallback to login
-        const res = await api.login(DEMO_USERS[0].email, DEMO_USERS[0].password);
+        const res = await api.login(REGISTERED_ACCOUNTS[0].email, REGISTERED_ACCOUNTS[0].password);
         setCurrentUser(res.user);
       } finally {
         setLoading(false);

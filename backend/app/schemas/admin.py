@@ -50,7 +50,7 @@ class AuditLogOut(BaseModel):
 class AdminBusinessCreate(BaseModel):
     business_name: str = Field(..., min_length=2)
     business_type: str = Field("restaurant", description="restaurant, hotel, bakery, catering")
-    fssai_license_number: str = Field("DEMO-FSSAI-000000")
+    fssai_license_number: str = Field("11223334001928", min_length=14, max_length=14)
     address: str = Field(..., min_length=3)
     city: str = Field("Bengaluru")
     contact_phone: str = Field("+919876500000")

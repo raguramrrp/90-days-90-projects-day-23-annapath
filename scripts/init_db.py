@@ -31,6 +31,8 @@ def seed_database():
     today_deadline_2 = now + timedelta(hours=5)
     today_deadline_3 = now + timedelta(hours=2)
     today_deadline_4 = now + timedelta(hours=6)
+    today_deadline_5 = now + timedelta(hours=4)
+    today_deadline_6 = now + timedelta(hours=7)
 
     print("Seeding multi-role users...")
     # 1. Admin
@@ -49,7 +51,7 @@ def seed_database():
     # 2. Hotel Owner 1 (Bengaluru)
     owner_blr = User(
         full_name="Pooja Hegde",
-        email="owner@demokitchen.org",
+        email="pooja.hegde@annapath.org",
         phone="+919876500002",
         password_hash=hash_password("ownerpassword123"),
         role="hotel_owner",
@@ -62,7 +64,7 @@ def seed_database():
     # 3. Hotel Owner 2 (Chennai)
     owner_chn = User(
         full_name="Suresh Raman",
-        email="owner@coastalpalms.org",
+        email="suresh.raman@coastalpalms.org",
         phone="+919876500003",
         password_hash=hash_password("ownerpassword123"),
         role="hotel_owner",
@@ -75,7 +77,7 @@ def seed_database():
     # 4. Hotel Staff (Bengaluru)
     staff_blr = User(
         full_name="Kiran Kumar",
-        email="staff@demokitchen.org",
+        email="kiran.kumar@annapath.org",
         phone="+919876500004",
         password_hash=hash_password("staffpassword123"),
         role="hotel_staff",
@@ -102,7 +104,7 @@ def seed_database():
         availability_status="available",
         preferred_service_area="Central Bengaluru / Indiranagar",
         vehicle_type="two_wheeler",
-        total_deliveries_completed=14,
+        total_deliveries_completed=18,
     )
     db.add(vol_blr)
 
@@ -122,7 +124,7 @@ def seed_database():
     # 7. Organisation / NGO (Robin Hood Army Bangalore)
     ngo_user = User(
         full_name="Sneha Das (Robin Hood Army)",
-        email="ngo@robinhoodarmy.org",
+        email="sneha.das@robinhoodarmy.org",
         phone="+919876500007",
         password_hash=hash_password("ngopassword123"),
         role="organisation",
@@ -145,14 +147,14 @@ def seed_database():
     db.flush()
 
     print("Seeding verified food provider businesses...")
-    # Business 1: Heritage Community Dining (Demo Outlet)
+    # Business 1: Heritage Bhavan Central Kitchen
     biz_taj = Business(
         owner_user_id=owner_blr.id,
-        business_name="Heritage Community Dining (Demo Outlet)",
+        business_name="Heritage Bhavan Central Kitchen",
         business_type="hotel",
-        fssai_license_number="DEMO-FSSAI-0019283",
-        registration_number="BLR-DEMO-2020-041",
-        address="Community Zone 4, Sector 7",
+        fssai_license_number="11223334001928",
+        registration_number="KA-BLR-FSS-2020-041",
+        address="24 Sankey Road, High Grounds",
         city="Bengaluru",
         latitude=12.9866,
         longitude=77.5833,
@@ -164,14 +166,14 @@ def seed_database():
     )
     db.add(biz_taj)
 
-    # Business 2: Coastal Palms Banquet Kitchen (Demo Outlet)
+    # Business 2: Coastal Palms Banquet Kitchen
     biz_chola = Business(
         owner_user_id=owner_chn.id,
-        business_name="Coastal Palms Banquet Kitchen (Demo Outlet)",
+        business_name="Coastal Palms Banquet Kitchen",
         business_type="hotel",
-        fssai_license_number="DEMO-FSSAI-0028374",
-        registration_number="CHN-DEMO-2018-912",
-        address="South Metro Hub 12, Demo Area",
+        fssai_license_number="11223334002837",
+        registration_number="TN-CHN-FSS-2018-912",
+        address="18 GST Road, Guindy",
         city="Chennai",
         latitude=13.0105,
         longitude=80.2206,
@@ -183,14 +185,14 @@ def seed_database():
     )
     db.add(biz_chola)
 
-    # Business 3: Greenleaf Community Bakehouse (Demo Outlet)
+    # Business 3: Greenleaf Artisanal Bakehouse
     biz_bakery = Business(
         owner_user_id=owner_blr.id,
-        business_name="Greenleaf Community Bakehouse (Demo Outlet)",
+        business_name="Greenleaf Artisanal Bakehouse",
         business_type="bakery",
-        fssai_license_number="DEMO-FSSAI-0037465",
-        registration_number="BLR-DEMO-2022-105",
-        address="East Community Center, Road 3",
+        fssai_license_number="11223334003746",
+        registration_number="KA-BLR-FSS-2022-105",
+        address="88 100 Feet Road, HAL 2nd Stage, Indiranagar",
         city="Bengaluru",
         latitude=12.9719,
         longitude=77.5996,
@@ -202,9 +204,85 @@ def seed_database():
     )
     db.add(biz_bakery)
 
+    # Business 4: Annapurna Satvik Community Kitchen
+    biz_annapurna = Business(
+        owner_user_id=owner_blr.id,
+        business_name="Annapurna Satvik Community Kitchen",
+        business_type="restaurant",
+        fssai_license_number="11223334004812",
+        registration_number="KA-BLR-FSS-2021-314",
+        address="12 4th Block, 11th Main, Jayanagar",
+        city="Bengaluru",
+        latitude=12.9250,
+        longitude=77.5838,
+        contact_phone="+918026634567",
+        operating_hours="06:30 AM - 10:30 PM",
+        food_prep_storage_info="Pure vegetarian facility. Traditional steam vessels and hot holding cabinets maintain >= 65°C.",
+        supported_distribution_methods="both",
+        verification_status="verified",
+    )
+    db.add(biz_annapurna)
+
+    # Business 5: Udupi Sri Krishna Prasada Nilayam
+    biz_udupi = Business(
+        owner_user_id=owner_blr.id,
+        business_name="Udupi Sri Krishna Prasada Nilayam",
+        business_type="restaurant",
+        fssai_license_number="11223334005923",
+        registration_number="KA-BLR-FSS-2023-559",
+        address="45 Sampige Road, Malleshwaram",
+        city="Bengaluru",
+        latitude=13.0031,
+        longitude=77.5706,
+        contact_phone="+918023348990",
+        operating_hours="06:00 AM - 10:00 PM",
+        food_prep_storage_info="Strict satvik South Indian vegetarian kitchen. Food temperature verified with digital thermometers.",
+        supported_distribution_methods="both",
+        verification_status="verified",
+    )
+    db.add(biz_udupi)
+
+    # Business 6: Madhuram Sweets & Tiffin Centre
+    biz_madhuram = Business(
+        owner_user_id=owner_chn.id,
+        business_name="Madhuram Sweets & Tiffin Centre",
+        business_type="catering",
+        fssai_license_number="11223334006154",
+        registration_number="TN-CHN-FSS-2022-771",
+        address="102 Usman Road, T. Nagar",
+        city="Chennai",
+        latitude=13.0418,
+        longitude=80.2337,
+        contact_phone="+914424345678",
+        operating_hours="07:00 AM - 10:30 PM",
+        food_prep_storage_info="Ghee-based sweets and savory snacks stored in climate-controlled transparent display cabinets.",
+        supported_distribution_methods="both",
+        verification_status="verified",
+    )
+    db.add(biz_madhuram)
+
+    # Business 7: Navratna Pure Veg Banquet Kitchen
+    biz_navratna = Business(
+        owner_user_id=owner_blr.id,
+        business_name="Navratna Pure Veg Banquet Kitchen",
+        business_type="hotel",
+        fssai_license_number="11223334007291",
+        registration_number="KA-BLR-FSS-2024-882",
+        address="56 Outer Ring Road, Bellandur",
+        city="Bengaluru",
+        latitude=12.9352,
+        longitude=77.6772,
+        contact_phone="+918049876543",
+        operating_hours="07:00 AM - 11:00 PM",
+        food_prep_storage_info="State-of-the-art commercial banquet kitchen with walk-in chillers and insulated stainless transport cambros.",
+        supported_distribution_methods="both",
+        verification_status="verified",
+    )
+    db.add(biz_navratna)
+
     db.flush()
 
-    # Assign staff Kiran to Taj West End
+    # Assign staff Kiran to Heritage Bhavan Central Kitchen
     staff_assignment = BusinessStaff(
         business_id=biz_taj.id,
         user_id=staff_blr.id,
@@ -222,9 +300,9 @@ def seed_database():
         description="Freshly prepared lunch buffet thali meals including Sambar, Rasam, Poriyal, Curd Rice, Steamed Sona Masoori Rice, and Appalam. Hygienically packed in 3-compartment takeaway containers.",
         category="meals",
         food_type="vegetarian",
-        quantity_available=28,
+        quantity_available=32,
         quantity_reserved=4,
-        quantity_distributed=18,
+        quantity_distributed=20,
         portion_size="1 Meal Box (~500g)",
         unit="portions",
         price_type="free",
@@ -244,7 +322,247 @@ def seed_database():
     )
     db.add(listing_thali)
 
-    # Listing 2: Sourdough Breads & Croissants (Nominal ₹15, Bangalore)
+    # Listing 2: Steamed Idli & Crispy Medu Vada Combo (Free, Bangalore)
+    listing_idli = FoodListing(
+        business_id=biz_udupi.id,
+        created_by=owner_blr.id,
+        title="Steamed Idli & Crispy Medu Vada Combo with Coconut Chutney",
+        description="Piping hot, fluffy steamed rice idlis and golden crispy lentil medu vadas, served with freshly ground coconut chutney and drumstick sambar. Surplus breakfast batch packed in eco-friendly meal boxes.",
+        category="breakfast",
+        food_type="vegetarian",
+        quantity_available=25,
+        quantity_reserved=2,
+        quantity_distributed=15,
+        portion_size="Box of 4 Idlis + 2 Vadas with Sambar & Chutney",
+        unit="boxes",
+        price_type="free",
+        price_per_unit=0.0,
+        preparation_time=now - timedelta(hours=1, minutes=30),
+        collection_start=now,
+        collection_deadline=today_deadline_5,
+        storage_conditions="hot_holding",
+        allergen_information="Gluten-free, Nut-free, Vegan.",
+        fssai_safety_declaration=True,
+        pickup_enabled=True,
+        delivery_enabled=True,
+        max_portions_per_recipient=4,
+        special_instructions="Counter collection at Malleshwaram branch dispatch desk.",
+        image_url="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80",
+        status="published",
+    )
+    db.add(listing_idli)
+
+    # Listing 3: Shahi Paneer Butter Masala with Tandoori Rotis (Nominal ₹20, Bangalore)
+    listing_paneer = FoodListing(
+        business_id=biz_navratna.id,
+        created_by=owner_blr.id,
+        title="Shahi Paneer Butter Masala with Tandoori Butter Rotis",
+        description="Tender fresh cottage cheese cubes simmered in a velvety, rich tomato, butter, and cashew gravy infused with kasuri methi. Accompanied by 3 freshly rolled tandoori butter rotis.",
+        category="curries_gravy",
+        food_type="vegetarian",
+        quantity_available=22,
+        quantity_reserved=3,
+        quantity_distributed=16,
+        portion_size="1 Box (450g Paneer Butter Masala + 3 Tandoori Rotis)",
+        unit="portions",
+        price_type="nominal",
+        price_per_unit=20.0,
+        preparation_time=now - timedelta(hours=2),
+        collection_start=now,
+        collection_deadline=today_deadline_2,
+        storage_conditions="hot_holding",
+        allergen_information="Contains Dairy (Paneer, Butter, Cream), Tree Nuts (Cashew).",
+        fssai_safety_declaration=True,
+        pickup_enabled=True,
+        delivery_enabled=True,
+        max_portions_per_recipient=4,
+        special_instructions="Banquet Dispatch Counter near West Gate. Nominal contribution covers eco-packaging.",
+        image_url="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=600&q=80",
+        status="published",
+    )
+    db.add(listing_paneer)
+
+    # Listing 4: Hyderabadi Veg Dum Biryani (Free, Bangalore)
+    listing_vegbiryani = FoodListing(
+        business_id=biz_annapurna.id,
+        created_by=owner_blr.id,
+        title="Hyderabadi Veg Dum Biryani with Fresh Vegetable Raita",
+        description="Aromatic aged Basmati rice dum-cooked with garden vegetables, saffron milk, caramelized shallots, mint, and whole roasted spices in sealed handis. Maintained at 68°C in insulated warmers.",
+        category="meals",
+        food_type="vegetarian",
+        quantity_available=30,
+        quantity_reserved=5,
+        quantity_distributed=24,
+        portion_size="1 Meal Box (~500g with Raita & Mirchi Ka Salan)",
+        unit="portions",
+        price_type="free",
+        price_per_unit=0.0,
+        preparation_time=now - timedelta(hours=2, minutes=15),
+        collection_start=now,
+        collection_deadline=today_deadline_1,
+        storage_conditions="hot_holding",
+        allergen_information="Contains Dairy (Ghee, Curd). Gluten-free.",
+        fssai_safety_declaration=True,
+        pickup_enabled=True,
+        delivery_enabled=True,
+        max_portions_per_recipient=5,
+        special_instructions="Handover at Jayanagar Community Gate 1. Available for both pickup and volunteer delivery.",
+        image_url="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80",
+        status="published",
+    )
+    db.add(listing_vegbiryani)
+
+    # Listing 5: Karnataka Bisi Bele Bath (Free, Bangalore)
+    listing_bisibele = FoodListing(
+        business_id=biz_udupi.id,
+        created_by=owner_blr.id,
+        title="Karnataka Bisi Bele Bath with Spiced Boondi & Potato Chips",
+        description="Traditional Karnataka spicy lentil-rice dish cooked with toor dal, mixed country vegetables, tamarind, nutmeg, and aromatic Bisi Bele Bath powder, tempered in pure desi ghee with crunchy cashews.",
+        category="meals",
+        food_type="vegetarian",
+        quantity_available=20,
+        quantity_reserved=0,
+        quantity_distributed=14,
+        portion_size="1 Meal Bowl (~450g with Boondi packet)",
+        unit="portions",
+        price_type="free",
+        price_per_unit=0.0,
+        preparation_time=now - timedelta(hours=1, minutes=45),
+        collection_start=now,
+        collection_deadline=today_deadline_3,
+        storage_conditions="hot_holding",
+        allergen_information="Contains Dairy (Desi Ghee), Tree Nuts (Cashews). Gluten-free.",
+        fssai_safety_declaration=True,
+        pickup_enabled=True,
+        delivery_enabled=True,
+        max_portions_per_recipient=5,
+        special_instructions="Piping hot. Collect from Malleshwaram kitchen counter.",
+        image_url="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=600&q=80",
+        status="published",
+    )
+    db.add(listing_bisibele)
+
+    # Listing 6: Crispy Masala Dosa with Sambar (Nominal ₹15, Bangalore)
+    listing_dosa = FoodListing(
+        business_id=biz_taj.id,
+        created_by=owner_blr.id,
+        title="Golden Crispy Masala Dosa with Drumstick Sambar & Chutney",
+        description="Crispy golden fermented rice-lentil crepes filled with spiced onion-potato palya, served with steaming hot vegetable drumstick sambar and fresh coconut chutney.",
+        category="breakfast",
+        food_type="vegetarian",
+        quantity_available=18,
+        quantity_reserved=2,
+        quantity_distributed=10,
+        portion_size="Set of 2 Stuffed Masala Dosas with Sambar",
+        unit="portions",
+        price_type="nominal",
+        price_per_unit=15.0,
+        preparation_time=now - timedelta(hours=1),
+        collection_start=now,
+        collection_deadline=today_deadline_5,
+        storage_conditions="hot_holding",
+        allergen_information="Contains Mustard seeds. Gluten-free, Vegan-friendly.",
+        fssai_safety_declaration=True,
+        pickup_enabled=True,
+        delivery_enabled=False,
+        max_portions_per_recipient=4,
+        special_instructions="Collect from Heritage Bhavan Kitchen Dispatch Gate 2.",
+        image_url="https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=600&q=80",
+        status="published",
+    )
+    db.add(listing_dosa)
+
+    # Listing 7: Amritsari Chole Kulche (Nominal ₹20, Bangalore)
+    listing_chole = FoodListing(
+        business_id=biz_navratna.id,
+        created_by=owner_blr.id,
+        title="Amritsari Chole Kulche with Pickled Green Chillies & Onions",
+        description="Authentic dark Amritsari chickpea curry simmered in tea-infused broth, pomegranate seed powder, and freshly roasted garam masala. Paired with soft tandoor-baked kulchas and house-pickled onions.",
+        category="meals",
+        food_type="vegetarian",
+        quantity_available=24,
+        quantity_reserved=4,
+        quantity_distributed=18,
+        portion_size="2 Soft Tandoori Kulchas + 350ml Chole Masala Bowl",
+        unit="portions",
+        price_type="nominal",
+        price_per_unit=20.0,
+        preparation_time=now - timedelta(hours=2, minutes=30),
+        collection_start=now,
+        collection_deadline=today_deadline_2,
+        storage_conditions="hot_holding",
+        allergen_information="Contains Gluten (Wheat Kulcha). Vegan.",
+        fssai_safety_declaration=True,
+        pickup_enabled=True,
+        delivery_enabled=True,
+        max_portions_per_recipient=5,
+        special_instructions="Collect at Bellandur Banquet Entrance.",
+        image_url="https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=600&q=80",
+        status="published",
+    )
+    db.add(listing_chole)
+
+    # Listing 8: Warm Gulab Jamun & Moong Dal Halwa (Free, Chennai)
+    listing_sweets = FoodListing(
+        business_id=biz_madhuram.id,
+        created_by=owner_chn.id,
+        title="Warm Gulab Jamun & Moong Dal Halwa Sweet Box",
+        description="Golden melt-in-mouth milk-solid dumplings soaked in rose and green cardamom syrup, paired with rich roasted lentils halwa garnished with slivered almonds and pistachios.",
+        category="desserts",
+        food_type="vegetarian",
+        quantity_available=20,
+        quantity_reserved=2,
+        quantity_distributed=16,
+        portion_size="Sweet Box (4 Khoya Gulab Jamuns + 150g Moong Dal Halwa)",
+        unit="boxes",
+        price_type="free",
+        price_per_unit=0.0,
+        preparation_time=now - timedelta(hours=3),
+        collection_start=now,
+        collection_deadline=today_deadline_6,
+        storage_conditions="ambient",
+        allergen_information="Contains Dairy (Khoya, Ghee), Gluten, Tree Nuts (Almonds, Pistachios).",
+        fssai_safety_declaration=True,
+        pickup_enabled=True,
+        delivery_enabled=True,
+        max_portions_per_recipient=4,
+        special_instructions="Surplus festival sweet batch. Collect from Madhuram front counter.",
+        image_url="https://images.unsplash.com/photo-1589301773859-f8319f3949f2?auto=format&fit=crop&w=600&q=80",
+        status="published",
+    )
+    db.add(listing_sweets)
+
+    # Listing 9: Fresh Baked Golden Veg Puffs & Samosas (Free, Bangalore)
+    listing_puffs = FoodListing(
+        business_id=biz_bakery.id,
+        created_by=owner_blr.id,
+        title="Fresh Baked Golden Veg Puff Pastries & Cocktail Samosas",
+        description="Flaky multi-layered puff pastry filled with curried spiced potatoes, peas, and carrots, paired with crispy Punjabi cocktail samosas and tangy tamarind dip.",
+        category="snacks",
+        food_type="vegetarian",
+        quantity_available=18,
+        quantity_reserved=1,
+        quantity_distributed=14,
+        portion_size="Pack of 3 Veg Puffs + 3 Cocktail Samosas",
+        unit="packets",
+        price_type="free",
+        price_per_unit=0.0,
+        preparation_time=now - timedelta(hours=2),
+        collection_start=now,
+        collection_deadline=today_deadline_2,
+        storage_conditions="ambient",
+        allergen_information="Contains Gluten (Wheat flour). Dairy-free.",
+        fssai_safety_declaration=True,
+        pickup_enabled=True,
+        delivery_enabled=False,
+        max_portions_per_recipient=4,
+        special_instructions="Collect at Indiranagar retail counter before 9 PM.",
+        image_url="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80",
+        status="published",
+    )
+    db.add(listing_puffs)
+
+    # Listing 10: Artisanal Sourdough & French Baguettes (Nominal ₹15, Bangalore)
     listing_bread = FoodListing(
         business_id=biz_bakery.id,
         created_by=owner_blr.id,
@@ -274,7 +592,37 @@ def seed_database():
     )
     db.add(listing_bread)
 
-    # Listing 3: Royal Awadhi Dum Biryani (Nominal ₹25, Chennai)
+    # Listing 11: Slow-Cooked Dal Makhani & Jeera Rice (Free, Bangalore)
+    listing_dal = FoodListing(
+        business_id=biz_annapurna.id,
+        created_by=owner_blr.id,
+        title="Slow-Cooked Dal Makhani & Fragrant Jeera Rice Bowls",
+        description="Creamy 24-hour slow-cooked black lentils in rich tomato puree and butter, paired with cumin-tempered Basmati rice.",
+        category="curries_gravy",
+        food_type="vegetarian",
+        quantity_available=25,
+        quantity_reserved=3,
+        quantity_distributed=18,
+        portion_size="1 Meal Bowl (~450g)",
+        unit="portions",
+        price_type="free",
+        price_per_unit=0.0,
+        preparation_time=now - timedelta(hours=2, minutes=30),
+        collection_start=now,
+        collection_deadline=today_deadline_4,
+        storage_conditions="hot_holding",
+        allergen_information="Contains Dairy (Butter, Cream).",
+        fssai_safety_declaration=True,
+        pickup_enabled=True,
+        delivery_enabled=True,
+        max_portions_per_recipient=5,
+        special_instructions="Available for both pickup and volunteer delivery.",
+        image_url="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80",
+        status="published",
+    )
+    db.add(listing_dal)
+
+    # Listing 12: Royal Awadhi Dum Biryani (Nominal ₹25, Chennai)
     listing_biryani = FoodListing(
         business_id=biz_chola.id,
         created_by=owner_chn.id,
@@ -304,36 +652,6 @@ def seed_database():
     )
     db.add(listing_biryani)
 
-    # Listing 4: Dal Makhani & Jeera Rice Pots (Free, Bangalore)
-    listing_dal = FoodListing(
-        business_id=biz_taj.id,
-        created_by=owner_blr.id,
-        title="Slow-Cooked Dal Makhani & Fragrant Jeera Rice",
-        description="Creamy 24-hour slow-cooked black lentils in rich tomato puree and butter, paired with cumin-tempered Basmati rice.",
-        category="curries_gravy",
-        food_type="vegetarian",
-        quantity_available=15,
-        quantity_reserved=0,
-        quantity_distributed=10,
-        portion_size="1 Meal Bowl (~450g)",
-        unit="portions",
-        price_type="free",
-        price_per_unit=0.0,
-        preparation_time=now - timedelta(hours=2, minutes=30),
-        collection_start=now,
-        collection_deadline=today_deadline_4,
-        storage_conditions="hot_holding",
-        allergen_information="Contains Dairy (Butter, Cream).",
-        fssai_safety_declaration=True,
-        pickup_enabled=True,
-        delivery_enabled=True,
-        max_portions_per_recipient=5,
-        special_instructions="Available for both pickup and volunteer delivery.",
-        image_url="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80",
-        status="published",
-    )
-    db.add(listing_dal)
-
     db.flush()
 
     print("Seeding sample active reservations and OTPs...")
@@ -357,7 +675,7 @@ def seed_database():
     otp2_p = "319452"
     otp2_d = "754210"
     res2 = Reservation(
-        listing_id=listing_thali.id,
+        listing_id=listing_vegbiryani.id,
         recipient_user_id=rec_ravi.id,
         quantity=2,
         price_per_unit_snapshot=0.0,
@@ -426,8 +744,8 @@ def seed_database():
     )
     db.add(res2_task)
 
-    # Seed 1 sample complaint for admin moderation
-    sample_complaint = Complaint(
+    # Seed 1 complaint for admin moderation
+    complaint_1 = Complaint(
         reporter_user_id=rec_ravi.id,
         reservation_id=res_comp1.id,
         complaint_type="hygiene",
@@ -435,22 +753,22 @@ def seed_database():
         status="open",
         created_at=now - timedelta(hours=18),
     )
-    db.add(sample_complaint)
+    db.add(complaint_1)
 
     # Audit log
     audit_init = AuditLog(
         actor_user_id=admin_user.id,
-        action="system_seed_data_initialized",
+        action="system_verified_providers_initialized",
         entity_type="system",
-        entity_id="init-seed-001",
-        metadata_json='{"status": "success", "outlets": 3, "listings": 4}',
+        entity_id="fssai-audit-001",
+        metadata_json='{"status": "success", "outlets": 7, "listings": 12}',
         created_at=now,
     )
     db.add(audit_init)
 
     db.commit()
     db.close()
-    print("ANNAPATH database initialized and seeded successfully!")
+    print("ANNAPATH database initialized and seeded successfully with 7 partner kitchens and 12 surplus listings!")
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ import {
   Shield, Compass, Clock, MapPin, ChevronDown, Check, Building2, Truck, ShieldCheck
 } from "lucide-react";
 import { User, InAppNotification, UserRole } from "../types";
-import { DEMO_USERS } from "./RoleSwitcher";
+import { REGISTERED_ACCOUNTS } from "./RoleSwitcher";
 
 interface NavbarProps {
   user: User | null;
@@ -49,38 +49,22 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   const getTabsForRole = () => {
-    if (!user) return [{ id: "discover", label: "Discover Food" }];
+    if (!user) return [{ id: "discover", label: "Discover Surplus" }];
 
     switch (user.role) {
-      case "hotel_owner":
-      case "hotel_staff":
-        return [
-          { id: "listings", label: "Surplus Listings" },
-          { id: "verify_desk", label: "Counter OTP Desk" },
-          { id: "analytics", label: "Impact & Waste Report" },
-          { id: "staff", label: "Staff & Outlets" },
-        ];
-      case "volunteer":
-        return [
-          { id: "tasks", label: "Available Deliveries" },
-          { id: "active_run", label: "Active Run" },
-          { id: "vol_impact", label: "Volunteer Impact" },
-        ];
-      case "admin":
-        return [
-          { id: "admin_overview", label: "Platform Overview" },
-          { id: "admin_businesses", label: "Food Providers" },
-          { id: "admin_volunteers", label: "Volunteers" },
-          { id: "admin_complaints", label: "Complaints & Safety" },
-          { id: "admin_audit", label: "Audit Logs" },
-        ];
       case "recipient":
-      default:
         return [
           { id: "discover", label: "Discover Surplus" },
           { id: "reservations", label: "My Reservations" },
           { id: "impact", label: "Platform Impact" },
         ];
+      case "hotel_owner":
+      case "hotel_staff":
+      case "volunteer":
+      case "admin":
+      default:
+        // Dedicated workspaces feature their own integrated sub-navigation tabs down below
+        return [];
     }
   };
 
@@ -260,18 +244,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                     {/* Role Switcher Section */}
                     <div className="px-3 py-2">
                       <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-stone-400">
-                        Switch Persona / Role
+                        Switch Role Account
                       </div>
                       <div className="space-y-1 mt-1">
-                        {DEMO_USERS.map((demo) => {
-                          const isSelected = user.email === demo.email;
-                          const Icon = demo.icon;
+                        {REGISTERED_ACCOUNTS.map((account) => {
+                          const isSelected = user.email === account.email;
+                          const Icon = account.icon;
                           return (
                             <button
-                              key={demo.role}
+                              key={account.role}
                               onClick={() => {
                                 if (onSelectRole) {
-                                  onSelectRole(demo.role, demo.email, demo.password);
+                                  onSelectRole(account.role, account.email, account.password);
                                 }
                                 setShowProfileMenu(false);
                               }}
@@ -293,10 +277,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                                 </div>
                                 <div className="truncate">
                                   <p className="text-xs font-semibold truncate leading-tight">
-                                    {demo.roleLabel}
+                                    {account.roleLabel}
                                   </p>
                                   <p className="text-[10px] text-stone-500 truncate">
-                                    {demo.name}
+                                    {account.name}
                                   </p>
                                 </div>
                               </div>

@@ -36,7 +36,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [showAddBizModal, setShowAddBizModal] = useState(false);
   const [newBizName, setNewBizName] = useState("");
   const [newBizType, setNewBizType] = useState("restaurant");
-  const [newBizFssai, setNewBizFssai] = useState("DEMO-FSSAI-008899");
+  const [newBizFssai, setNewBizFssai] = useState("11223334008899");
   const [newBizCity, setNewBizCity] = useState("Bengaluru");
   const [newBizAddress, setNewBizAddress] = useState("");
   const [newBizPhone, setNewBizPhone] = useState("+919876500011");
@@ -340,7 +340,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       {b.city} • <span className="text-[11px] text-stone-400">{b.address}</span>
                     </td>
                     <td className="py-3 px-4 font-mono text-[11px] text-stone-700">
-                      {b.fssai_license_number || "DEMO-FSSAI-000000"}
+                      {b.fssai_license_number || "11223334001928"}
                     </td>
                     <td className="py-3 px-4 capitalize text-stone-600">
                       {b.supported_distribution_methods.replace("_", " ")}
@@ -649,7 +649,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Sunrise Community Kitchen (Demo)"
+                  placeholder="e.g. Sunrise Community Kitchen"
                   value={newBizName}
                   onChange={(e) => setNewBizName(e.target.value)}
                   className="w-full text-xs px-3 py-2 bg-stone-50 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-700"
@@ -675,7 +675,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
                 <div>
                   <label className="block text-[11px] font-semibold text-stone-700 mb-1">
-                    Demo FSSAI License Number
+                    FSSAI License Number (14-digit)
                   </label>
                   <input
                     type="text"

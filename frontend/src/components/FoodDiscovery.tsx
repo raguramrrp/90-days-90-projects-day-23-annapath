@@ -17,6 +17,7 @@ interface FoodDiscoveryProps {
 const CATEGORIES = [
   { id: "", label: "All Categories" },
   { id: "meals", label: "🍱 Full Meals" },
+  { id: "breakfast", label: "🥞 Breakfast & Tiffins" },
   { id: "bakery", label: "🥖 Bakery & Breads" },
   { id: "curries_gravy", label: "🍲 Curries & Gravy" },
   { id: "snacks", label: "☕ Snacks & Tea" },
