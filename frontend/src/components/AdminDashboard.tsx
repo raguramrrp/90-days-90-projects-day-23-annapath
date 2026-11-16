@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ShieldCheck, AlertTriangle, Building2, Truck, Check, X,
   FileText, Clock, Users, ArrowUpRight, Search
@@ -12,6 +12,8 @@ interface AdminDashboardProps {
   volunteers: User[];
   complaints: Complaint[];
   auditLogs: any[];
+  activeTab?: string;
+  onTabChange?: (tab: string) => void;
   onRefresh: () => void;
 }
 
@@ -21,12 +23,30 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   volunteers,
   complaints,
   auditLogs,
+  activeTab = "admin_overview",
+  onTabChange,
   onRefresh,
 }) => {
   const [subTab, setSubTab] = useState<"overview" | "businesses" | "volunteers" | "complaints" | "audit">("overview");
   const [resolvingId, setResolvingId] = useState<string | null>(null);
   const [resolutionText, setResolutionText] = useState("");
   const [acting, setActing] = useState(false);
+
+  useEffect(() => {
+    if (activeTab && activeTab.startsWith("admin_")) {
+      const mapped = activeTab.replace("admin_", "") as any;
+      if (["overview", "businesses", "volunteers", "complaints", "audit"].includes(mapped)) {
+        setSubTab(mapped);
+      }
+    }
+  }, [activeTab]);
+
+  const handleSubTabChange = (tab: "overview" | "businesses" | "volunteers" | "complaints" | "audit") => {
+    setSubTab(tab);
+    if (onTabChange) {
+      onTabChange(`admin_${tab}`);
+    }
+  };
 
   const handleVerifyBusiness = async (bizId: string, action: string) => {
     try {
@@ -94,7 +114,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         {/* Sub-tab navigation */}
         <div className="flex bg-stone-100 p-1 rounded-xl border border-stone-200 gap-1 text-xs">
           <button
-            onClick={() => setSubTab("overview")}
+            onClick={() => handleSubTabChange("overview")}
             className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
               subTab === "overview"
                 ? "bg-white text-stone-900 font-bold shadow-xs"
@@ -104,7 +124,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             Overview
           </button>
           <button
-            onClick={() => setSubTab("businesses")}
+            onClick={() => handleSubTabChange("businesses")}
             className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
               subTab === "businesses"
                 ? "bg-white text-stone-900 font-bold shadow-xs"
@@ -114,7 +134,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             Providers ({businesses.length})
           </button>
           <button
-            onClick={() => setSubTab("volunteers")}
+            onClick={() => handleSubTabChange("volunteers")}
             className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
               subTab === "volunteers"
                 ? "bg-white text-stone-900 font-bold shadow-xs"
@@ -124,7 +144,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             Volunteers ({volunteers.length})
           </button>
           <button
-            onClick={() => setSubTab("complaints")}
+            onClick={() => handleSubTabChange("complaints")}
             className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
               subTab === "complaints"
                 ? "bg-white text-stone-900 font-bold shadow-xs"
@@ -134,7 +154,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             Complaints ({complaints.length})
           </button>
           <button
-            onClick={() => setSubTab("audit")}
+            onClick={() => handleSubTabChange("audit")}
             className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
               subTab === "audit"
                 ? "bg-white text-stone-900 font-bold shadow-xs"

@@ -173,14 +173,7 @@ export function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#faf9f6]">
-      {/* 1. Instant Role Switcher for Reviewers/Evaluators */}
-      <RoleSwitcher
-        currentRole={currentUser?.role || "recipient"}
-        currentEmail={currentUser?.email || ""}
-        onSelectRole={handleSelectRole}
-      />
-
-      {/* 2. Top Navigation Bar */}
+      {/* Top Navigation Bar with Integrated Role Switcher in Profile Menu */}
       <Navbar
         user={currentUser}
         notifications={notifications}
@@ -192,6 +185,7 @@ export function App() {
         }}
         onOpenSafety={() => setShowSafetyModal(true)}
         onMarkNotificationRead={handleMarkNotificationRead}
+        onSelectRole={handleSelectRole}
       />
 
       {/* 3. Main Workspace Container */}
@@ -230,9 +224,12 @@ export function App() {
             {(activeTab === "listings" || activeTab === "verify_desk" || activeTab === "analytics" || activeTab === "staff") && (
               <HotelDashboard
                 business={businesses[0] || null}
+                businesses={businesses}
                 listings={listings}
                 reservations={reservations}
                 analytics={hotelAnalytics}
+                activeTab={activeTab}
+                onTabChange={setActiveTab}
                 onRefresh={refreshData}
               />
             )}
@@ -241,6 +238,8 @@ export function App() {
             {(activeTab === "tasks" || activeTab === "active_run" || activeTab === "vol_impact") && (
               <VolunteerDashboard
                 tasks={volunteerTasks}
+                activeTab={activeTab}
+                onTabChange={setActiveTab}
                 onRefresh={refreshData}
               />
             )}
@@ -253,6 +252,8 @@ export function App() {
                 volunteers={volunteers}
                 complaints={complaints}
                 auditLogs={auditLogs}
+                activeTab={activeTab}
+                onTabChange={setActiveTab}
                 onRefresh={refreshData}
               />
             )}
