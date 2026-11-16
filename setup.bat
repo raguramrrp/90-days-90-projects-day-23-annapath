@@ -34,7 +34,11 @@ echo [OK] Node.js runtime detected.
 REM 3. Create or verify Virtual Environment
 if not exist ".venv\Scripts\python.exe" (
     echo [INFO] Creating Python virtual environment in .venv...
-    python -m venv .venv
+    if exist "%LOCALAPPDATA%\Programs\Python\Python312\python.exe" (
+        "%LOCALAPPDATA%\Programs\Python\Python312\python.exe" -m venv .venv
+    ) else (
+        python -m venv .venv
+    )
     if %ERRORLEVEL% neq 0 (
         echo [ERROR] Failed to create virtual environment.
         pause
@@ -48,7 +52,7 @@ call .venv\Scripts\activate.bat
 
 REM 4. Install Python Dependencies
 echo [INFO] Installing Python dependencies from requirements.txt...
-pip install -r requirements.txt --quiet
+"%~dp0.venv\Scripts\python.exe" -m pip install -r requirements.txt --quiet --no-warn-script-location
 if %ERRORLEVEL% neq 0 (
     echo [WARNING] Some dependencies were cached or already satisfied.
 )
@@ -56,7 +60,7 @@ echo [OK] Python dependencies verified.
 
 REM 5. Initialize & Seed Database
 echo [INFO] Initializing ANNAPATH SQLite database and seeding Indian metro data...
-python scripts\init_db.py
+"%~dp0.venv\Scripts\python.exe" scripts\init_db.py
 if %ERRORLEVEL% neq 0 (
     echo [ERROR] Database initialization failed.
     pause
