@@ -100,9 +100,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className="font-extrabold text-xl tracking-tight text-stone-900 font-['Plus_Jakarta_Sans',sans-serif]">
                   ANNAPATH
                 </span>
-                <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800 tracking-wide uppercase">
-                  India
-                </span>
               </div>
               <p className="text-[11px] text-stone-500 font-medium">
                 Good food deserves another destination.

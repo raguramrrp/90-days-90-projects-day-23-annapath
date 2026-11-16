@@ -346,7 +346,7 @@ export function App() {
       <footer className="bg-white border-t border-stone-200 py-6 mt-12 text-center text-xs text-stone-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="font-medium">
-            <strong>ANNAPATH</strong> — India's Community Food Redistribution & Surplus Management Network
+            <strong>ANNAPATH</strong> — Community Food Redistribution & Surplus Management Network
           </p>
           <div className="flex items-center gap-4 text-stone-400 text-[11px]">
             <span>FSSAI Compliant</span>
