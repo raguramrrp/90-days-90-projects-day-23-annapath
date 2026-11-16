@@ -11,9 +11,9 @@ interface RoleSwitcherProps {
 export const REGISTERED_ACCOUNTS = [
   {
     role: "recipient" as UserRole,
-    name: "Ravi Shankar",
+    name: "Aditya Varma",
     roleLabel: "Recipient",
-    email: "recipient@annapath.org",
+    email: "aditya.varma@annapath.org",
     password: "recipientpassword123",
     icon: UserIcon,
     badgeColor: "bg-amber-100 text-amber-800 border-amber-300",
@@ -21,9 +21,9 @@ export const REGISTERED_ACCOUNTS = [
   },
   {
     role: "hotel_owner" as UserRole,
-    name: "Pooja Hegde",
+    name: "Ananya Deshmukh",
     roleLabel: "Hotel Owner",
-    email: "pooja.hegde@annapath.org",
+    email: "ananya.deshmukh@annapath.org",
     password: "ownerpassword123",
     icon: Building2,
     badgeColor: "bg-emerald-100 text-emerald-800 border-emerald-300",
@@ -31,9 +31,9 @@ export const REGISTERED_ACCOUNTS = [
   },
   {
     role: "hotel_staff" as UserRole,
-    name: "Kiran Kumar",
+    name: "Rohan Verma",
     roleLabel: "Hotel Staff",
-    email: "kiran.kumar@annapath.org",
+    email: "rohan.verma@annapath.org",
     password: "staffpassword123",
     icon: Building2,
     badgeColor: "bg-teal-100 text-teal-800 border-teal-300",
@@ -41,9 +41,9 @@ export const REGISTERED_ACCOUNTS = [
   },
   {
     role: "volunteer" as UserRole,
-    name: "Arun Swaminathan",
+    name: "Karthik Sundaram",
     roleLabel: "Volunteer",
-    email: "volunteer@annapath.org",
+    email: "karthik.sundaram@annapath.org",
     password: "volunteerpassword123",
     icon: Truck,
     badgeColor: "bg-blue-100 text-blue-800 border-blue-300",

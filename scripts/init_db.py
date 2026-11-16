@@ -39,7 +39,7 @@ def seed_database():
     admin_user = User(
         full_name="Platform Administrator",
         email="admin@annapath.org",
-        phone="+919876500001",
+        phone="+919000000001",
         password_hash=hash_password("adminpassword123"),
         role="admin",
         account_status="verified",
@@ -50,9 +50,9 @@ def seed_database():
 
     # 2. Hotel Owner 1 (Bengaluru)
     owner_blr = User(
-        full_name="Pooja Hegde",
-        email="pooja.hegde@annapath.org",
-        phone="+919876500002",
+        full_name="Ananya Deshmukh",
+        email="ananya.deshmukh@annapath.org",
+        phone="+919000000002",
         password_hash=hash_password("ownerpassword123"),
         role="hotel_owner",
         account_status="verified",
@@ -63,9 +63,9 @@ def seed_database():
 
     # 3. Hotel Owner 2 (Chennai)
     owner_chn = User(
-        full_name="Suresh Raman",
-        email="suresh.raman@coastalpalms.org",
-        phone="+919876500003",
+        full_name="Vikramaditya Iyer",
+        email="vikramaditya.iyer@coastalpalms.org",
+        phone="+919000000003",
         password_hash=hash_password("ownerpassword123"),
         role="hotel_owner",
         account_status="verified",
@@ -76,9 +76,9 @@ def seed_database():
 
     # 4. Hotel Staff (Bengaluru)
     staff_blr = User(
-        full_name="Kiran Kumar",
-        email="kiran.kumar@annapath.org",
-        phone="+919876500004",
+        full_name="Rohan Verma",
+        email="rohan.verma@annapath.org",
+        phone="+919000000004",
         password_hash=hash_password("staffpassword123"),
         role="hotel_staff",
         account_status="verified",
@@ -89,9 +89,9 @@ def seed_database():
 
     # 5. Volunteer 1 (Bengaluru)
     vol_blr = User(
-        full_name="Arun Swaminathan",
-        email="volunteer@annapath.org",
-        phone="+919876500005",
+        full_name="Karthik Sundaram",
+        email="karthik.sundaram@annapath.org",
+        phone="+919000000005",
         password_hash=hash_password("volunteerpassword123"),
         role="volunteer",
         account_status="verified",
@@ -109,23 +109,23 @@ def seed_database():
     db.add(vol_blr)
 
     # 6. Recipient 1 (General Public)
-    rec_ravi = User(
-        full_name="Ravi Shankar",
-        email="recipient@annapath.org",
-        phone="+919876500006",
+    rec_aditya = User(
+        full_name="Aditya Varma",
+        email="aditya.varma@annapath.org",
+        phone="+919000000006",
         password_hash=hash_password("recipientpassword123"),
         role="recipient",
         account_status="verified",
         phone_verified=True,
     )
-    rec_ravi.profile = UserProfile(preferred_language="en", city="Bengaluru")
-    db.add(rec_ravi)
+    rec_aditya.profile = UserProfile(preferred_language="en", city="Bengaluru")
+    db.add(rec_aditya)
 
-    # 7. Organisation / NGO (Robin Hood Army Bangalore)
+    # 7. Organisation / NGO (Seva Bhojan Community Trust)
     ngo_user = User(
-        full_name="Sneha Das (Robin Hood Army)",
-        email="sneha.das@robinhoodarmy.org",
-        phone="+919876500007",
+        full_name="Sunita Menon (Seva Bhojan Foundation)",
+        email="sunita.menon@sevabhojan.org",
+        phone="+919000000007",
         password_hash=hash_password("ngopassword123"),
         role="organisation",
         account_status="verified",
@@ -134,10 +134,10 @@ def seed_database():
     ngo_user.profile = UserProfile(preferred_language="en", city="Bengaluru")
     ngo_user.owned_organisations = [
         Organisation(
-            organisation_name="Robin Hood Army Bengaluru Chapter",
+            organisation_name="Seva Bhojan Community Trust",
             organisation_type="ngo",
-            registration_number="RHA-KA-2021-884",
-            address="14th Main, HAL 2nd Stage, Indiranagar",
+            registration_number="SBT-KA-2021-419",
+            address="Community Hall, 5th Cross, Indiranagar",
             city="Bengaluru",
             verification_status="verified",
         )
@@ -148,42 +148,42 @@ def seed_database():
 
     print("Seeding verified food provider businesses...")
     # Business 1: Heritage Bhavan Central Kitchen
-    biz_taj = Business(
+    biz_heritage = Business(
         owner_user_id=owner_blr.id,
         business_name="Heritage Bhavan Central Kitchen",
         business_type="hotel",
         fssai_license_number="11223334001928",
         registration_number="KA-BLR-FSS-2020-041",
-        address="24 Sankey Road, High Grounds",
+        address="42 Silver Oak Marg, Vasanth Nagar",
         city="Bengaluru",
         latitude=12.9866,
         longitude=77.5833,
-        contact_phone="+918066605660",
+        contact_phone="+919000000101",
         operating_hours="07:00 AM - 11:30 PM",
         food_prep_storage_info="HACCP compliant blast chilling and steam warmers maintain >= 65°C hot holding.",
         supported_distribution_methods="both",
         verification_status="verified",
     )
-    db.add(biz_taj)
+    db.add(biz_heritage)
 
     # Business 2: Coastal Palms Banquet Kitchen
-    biz_chola = Business(
+    biz_coastal = Business(
         owner_user_id=owner_chn.id,
         business_name="Coastal Palms Banquet Kitchen",
         business_type="hotel",
         fssai_license_number="11223334002837",
         registration_number="TN-CHN-FSS-2018-912",
-        address="18 GST Road, Guindy",
+        address="77 Bayview Boulevard, Mylapore",
         city="Chennai",
         latitude=13.0105,
         longitude=80.2206,
-        contact_phone="+914422200000",
+        contact_phone="+919000000102",
         operating_hours="06:30 AM - 11:00 PM",
         food_prep_storage_info="FSSAI 5-star hygiene rating. Food sealed in insulated food-grade containers.",
         supported_distribution_methods="both",
         verification_status="verified",
     )
-    db.add(biz_chola)
+    db.add(biz_coastal)
 
     # Business 3: Greenleaf Artisanal Bakehouse
     biz_bakery = Business(
@@ -192,11 +192,11 @@ def seed_database():
         business_type="bakery",
         fssai_license_number="11223334003746",
         registration_number="KA-BLR-FSS-2022-105",
-        address="88 100 Feet Road, HAL 2nd Stage, Indiranagar",
+        address="15 Orchid Lane, Defense Colony, Indiranagar",
         city="Bengaluru",
         latitude=12.9719,
         longitude=77.5996,
-        contact_phone="+918041122334",
+        contact_phone="+919000000103",
         operating_hours="08:00 AM - 09:30 PM",
         food_prep_storage_info="Freshly baked sourdough and bread loaves stored in moisture-controlled bins.",
         supported_distribution_methods="direct_pickup",
@@ -211,11 +211,11 @@ def seed_database():
         business_type="restaurant",
         fssai_license_number="11223334004812",
         registration_number="KA-BLR-FSS-2021-314",
-        address="12 4th Block, 11th Main, Jayanagar",
+        address="83 Blossom Avenue, 4th Block, Jayanagar",
         city="Bengaluru",
         latitude=12.9250,
         longitude=77.5838,
-        contact_phone="+918026634567",
+        contact_phone="+919000000104",
         operating_hours="06:30 AM - 10:30 PM",
         food_prep_storage_info="Pure vegetarian facility. Traditional steam vessels and hot holding cabinets maintain >= 65°C.",
         supported_distribution_methods="both",
@@ -230,11 +230,11 @@ def seed_database():
         business_type="restaurant",
         fssai_license_number="11223334005923",
         registration_number="KA-BLR-FSS-2023-559",
-        address="45 Sampige Road, Malleshwaram",
+        address="19 Temple View Lane, Malleshwaram",
         city="Bengaluru",
         latitude=13.0031,
         longitude=77.5706,
-        contact_phone="+918023348990",
+        contact_phone="+919000000105",
         operating_hours="06:00 AM - 10:00 PM",
         food_prep_storage_info="Strict satvik South Indian vegetarian kitchen. Food temperature verified with digital thermometers.",
         supported_distribution_methods="both",
@@ -249,11 +249,11 @@ def seed_database():
         business_type="catering",
         fssai_license_number="11223334006154",
         registration_number="TN-CHN-FSS-2022-771",
-        address="102 Usman Road, T. Nagar",
+        address="61 Weavers Colony Road, T. Nagar",
         city="Chennai",
         latitude=13.0418,
         longitude=80.2337,
-        contact_phone="+914424345678",
+        contact_phone="+919000000106",
         operating_hours="07:00 AM - 10:30 PM",
         food_prep_storage_info="Ghee-based sweets and savory snacks stored in climate-controlled transparent display cabinets.",
         supported_distribution_methods="both",
@@ -268,11 +268,11 @@ def seed_database():
         business_type="hotel",
         fssai_license_number="11223334007291",
         registration_number="KA-BLR-FSS-2024-882",
-        address="56 Outer Ring Road, Bellandur",
+        address="104 Emerald Crest, Outer Ring Road, Bellandur",
         city="Bengaluru",
         latitude=12.9352,
         longitude=77.6772,
-        contact_phone="+918049876543",
+        contact_phone="+919000000107",
         operating_hours="07:00 AM - 11:00 PM",
         food_prep_storage_info="State-of-the-art commercial banquet kitchen with walk-in chillers and insulated stainless transport cambros.",
         supported_distribution_methods="both",
@@ -282,9 +282,9 @@ def seed_database():
 
     db.flush()
 
-    # Assign staff Kiran to Heritage Bhavan Central Kitchen
+    # Assign staff Rohan to Heritage Bhavan Central Kitchen
     staff_assignment = BusinessStaff(
-        business_id=biz_taj.id,
+        business_id=biz_heritage.id,
         user_id=staff_blr.id,
         permission_level="manager",
         status="active",
@@ -294,7 +294,7 @@ def seed_database():
     print("Seeding surplus food listings...")
     # Listing 1: South Indian Executive Thali (Free, Bangalore)
     listing_thali = FoodListing(
-        business_id=biz_taj.id,
+        business_id=biz_heritage.id,
         created_by=owner_blr.id,
         title="South Indian Executive Thali Meals (Surplus)",
         description="Freshly prepared lunch buffet thali meals including Sambar, Rasam, Poriyal, Curd Rice, Steamed Sona Masoori Rice, and Appalam. Hygienically packed in 3-compartment takeaway containers.",
@@ -346,7 +346,7 @@ def seed_database():
         pickup_enabled=True,
         delivery_enabled=True,
         max_portions_per_recipient=4,
-        special_instructions="Counter collection at Malleshwaram branch dispatch desk.",
+        special_instructions="Counter collection at Malleshwaram kitchen dispatch desk.",
         image_url="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80",
         status="published",
     )
@@ -444,7 +444,7 @@ def seed_database():
 
     # Listing 6: Crispy Masala Dosa with Sambar (Nominal ₹15, Bangalore)
     listing_dosa = FoodListing(
-        business_id=biz_taj.id,
+        business_id=biz_heritage.id,
         created_by=owner_blr.id,
         title="Golden Crispy Masala Dosa with Drumstick Sambar & Chutney",
         description="Crispy golden fermented rice-lentil crepes filled with spiced onion-potato palya, served with steaming hot vegetable drumstick sambar and fresh coconut chutney.",
@@ -526,7 +526,7 @@ def seed_database():
         pickup_enabled=True,
         delivery_enabled=True,
         max_portions_per_recipient=4,
-        special_instructions="Surplus festival sweet batch. Collect from Madhuram front counter.",
+        special_instructions="Surplus sweet batch. Collect from Madhuram front counter.",
         image_url="https://images.unsplash.com/photo-1589301773859-f8319f3949f2?auto=format&fit=crop&w=600&q=80",
         status="published",
     )
@@ -624,7 +624,7 @@ def seed_database():
 
     # Listing 12: Royal Awadhi Dum Biryani (Nominal ₹25, Chennai)
     listing_biryani = FoodListing(
-        business_id=biz_chola.id,
+        business_id=biz_coastal.id,
         created_by=owner_chn.id,
         title="Royal Awadhi Chicken Dum Biryani with Mirchi Salan",
         description="Premium long-grain Basmati rice dum-cooked with tender spiced chicken cuts, saffron, brown onions, and aromatic spices. Maintained at 68°C in insulated cambro containers.",
@@ -654,12 +654,12 @@ def seed_database():
 
     db.flush()
 
-    print("Seeding sample active reservations and OTPs...")
-    # Active Reservation 1: Direct Pickup by Ravi (Ready for pickup with OTP)
+    print("Seeding active reservations and OTPs...")
+    # Active Reservation 1: Direct Pickup by Aditya (Ready for pickup with OTP)
     otp1 = "842109"
     res1 = Reservation(
         listing_id=listing_thali.id,
-        recipient_user_id=rec_ravi.id,
+        recipient_user_id=rec_aditya.id,
         quantity=2,
         price_per_unit_snapshot=0.0,
         total_price=0.0,
@@ -671,12 +671,12 @@ def seed_database():
     )
     db.add(res1)
 
-    # Active Reservation 2: Volunteer Delivery for Ravi (Volunteer Arun assigned)
+    # Active Reservation 2: Volunteer Delivery for Aditya (Volunteer Karthik assigned)
     otp2_p = "319452"
     otp2_d = "754210"
     res2 = Reservation(
         listing_id=listing_vegbiryani.id,
-        recipient_user_id=rec_ravi.id,
+        recipient_user_id=rec_aditya.id,
         quantity=2,
         price_per_unit_snapshot=0.0,
         total_price=0.0,
@@ -693,7 +693,7 @@ def seed_database():
     # Historical Completed Reservation 1 (Direct Pickup)
     res_comp1 = Reservation(
         listing_id=listing_thali.id,
-        recipient_user_id=rec_ravi.id,
+        recipient_user_id=rec_aditya.id,
         quantity=3,
         price_per_unit_snapshot=0.0,
         total_price=0.0,
@@ -709,7 +709,7 @@ def seed_database():
     # Historical Completed Reservation 2 (Volunteer Delivery)
     res_comp2 = Reservation(
         listing_id=listing_biryani.id,
-        recipient_user_id=rec_ravi.id,
+        recipient_user_id=rec_aditya.id,
         quantity=4,
         price_per_unit_snapshot=25.0,
         total_price=100.0,
@@ -726,8 +726,8 @@ def seed_database():
 
     res2_addr = DeliveryAddress(
         reservation_id=res2.id,
-        recipient_user_id=rec_ravi.id,
-        address_line="Community Support Desk, Ward 88, Bellandur",
+        recipient_user_id=rec_aditya.id,
+        address_line="Civic Center Handover Desk, Ward 88, Bellandur",
         city="Bengaluru",
         latitude=12.9279,
         longitude=77.6718,
@@ -746,10 +746,10 @@ def seed_database():
 
     # Seed 1 complaint for admin moderation
     complaint_1 = Complaint(
-        reporter_user_id=rec_ravi.id,
+        reporter_user_id=rec_aditya.id,
         reservation_id=res_comp1.id,
         complaint_type="hygiene",
-        description="Packaging container lid was slightly loose upon collection. Food was fresh and tasty, but requested hotel staff use double-sealed tape.",
+        description="Packaging container lid was slightly loose upon collection. Food was fresh and tasty, but requested kitchen staff use double-sealed tape.",
         status="open",
         created_at=now - timedelta(hours=18),
     )

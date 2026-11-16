@@ -1159,7 +1159,7 @@ export const HotelDashboard: React.FC<HotelDashboardProps> = ({
                 <input
                   type="email"
                   required
-                  placeholder="e.g. kiran.kumar@annapath.org"
+                  placeholder="e.g. rohan.verma@annapath.org"
                   value={newStaffEmail}
                   onChange={(e) => setNewStaffEmail(e.target.value)}
                   className="w-full text-xs px-3 py-2 bg-stone-50 rounded-lg border border-stone-300 focus:ring-2 focus:ring-emerald-700"

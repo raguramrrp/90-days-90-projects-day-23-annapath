@@ -86,13 +86,13 @@ def test_duplicate_user_registration_fails(db):
 def test_user_authentication(db):
     """Verify valid login and invalid login rejection."""
     # Seeded hotel owner
-    creds = UserLogin(email="pooja.hegde@annapath.org", password="ownerpassword123")
+    creds = UserLogin(email="ananya.deshmukh@annapath.org", password="ownerpassword123")
     user = authenticate_user(db, creds)
-    assert user.email == "pooja.hegde@annapath.org"
+    assert user.email == "ananya.deshmukh@annapath.org"
     assert user.role == "hotel_owner"
 
     # Wrong password
-    bad_creds = UserLogin(email="pooja.hegde@annapath.org", password="wrongpassword")
+    bad_creds = UserLogin(email="ananya.deshmukh@annapath.org", password="wrongpassword")
     with pytest.raises(HTTPException) as exc:
         authenticate_user(db, bad_creds)
     assert exc.value.status_code == 401

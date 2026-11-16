@@ -39,7 +39,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [newBizFssai, setNewBizFssai] = useState("11223334008899");
   const [newBizCity, setNewBizCity] = useState("Bengaluru");
   const [newBizAddress, setNewBizAddress] = useState("");
-  const [newBizPhone, setNewBizPhone] = useState("+919876500011");
+  const [newBizPhone, setNewBizPhone] = useState("+919000000011");
   const [newBizHours, setNewBizHours] = useState("08:00 AM - 10:00 PM");
   const [submittingBiz, setSubmittingBiz] = useState(false);
 
@@ -47,7 +47,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [showAddVolModal, setShowAddVolModal] = useState(false);
   const [newVolName, setNewVolName] = useState("");
   const [newVolEmail, setNewVolEmail] = useState("");
-  const [newVolPhone, setNewVolPhone] = useState("+919876500022");
+  const [newVolPhone, setNewVolPhone] = useState("+919000000022");
   const [newVolCity, setNewVolCity] = useState("Bengaluru");
   const [newVolArea, setNewVolArea] = useState("Central Community Zone");
   const [newVolVehicle, setNewVolVehicle] = useState("two_wheeler");
