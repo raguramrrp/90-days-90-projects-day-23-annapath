@@ -136,9 +136,7 @@ ANNAPATH is built as a **modular monolith** optimized for zero-config Windows ex
 │   └── README.md              # Seed data origin and formulas
 ├── scripts/
 │   └── init_db.py             # Database creation & realistic metro seeding
-├── tests/                     # Automated test suite (21 tests)
-└── screenshots/
-    └── README.md              # Interface capture specifications
+└── tests/                     # Automated test suite (21 tests)
 ```
 
 ---
